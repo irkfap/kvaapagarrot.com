@@ -1,0 +1,7 @@
+{
+  "name": "kvaapagarrot.com",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Stepan Legachev <gitlog@sib.li>",
+  "license": "MIT"
+}
