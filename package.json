@@ -3,5 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "author": "Stepan Legachev <gitlog@sib.li>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "fastify": "^3.6.0"
+  }
 }
