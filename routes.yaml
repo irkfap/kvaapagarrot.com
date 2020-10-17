@@ -1,0 +1,35 @@
+handlers:
+  - url: /favicon\.ico
+    mime_type: image/x-icon
+    static_files: public/favicon.ico
+    upload: public/favicon\.ico
+    expiration: "7d"
+
+  - url: /robots\.txt
+    static_files: public/robots.txt
+    upload: public/robots\.txt
+
+  # Icons
+  - url: /fontello
+    static_dir: public/fontello
+    http_headers:
+      Access-Control-Allow-Origin: "*"
+
+  # Image files
+  - url: /(.*\.(png|svg|webp|jpg|jpeg|gif|apng|mp4))$
+    static_files: public/\1
+    upload: public/.*\.(png|svg|webp|jpg|jpeg|gif|apng|mp4)$
+    http_headers:
+      Access-Control-Allow-Origin: "*"
+
+  # Other static files
+  - url: /(.*\.(html|css|js|map))$
+    static_files: public/\1
+    upload: public/.*\.(html|css|js|map)$
+    http_headers:
+      Access-Control-Allow-Origin: "*"
+
+#  - url: /.*
+#    secure: always
+#    redirect_http_response_code: 301
+#    script: auto
