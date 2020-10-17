@@ -1,3 +1,10 @@
-runtime: java11
-entrypoint: ./kvaapagarrot
+# https://cloud.google.com/appengine/docs/standard/nodejs/config/appref
 
+runtime: nodejs12
+instance_class: F1
+
+inbound_services:
+  - warmup
+
+includes:
+  - routes.yaml
