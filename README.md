@@ -19,6 +19,30 @@ yarn deploy
     - Storage Object Viewer
     - Storage Object Creator (to upload new files)
     - Service Account User (to run operations as a service account)
+    
+    <details>
+    <summary>Pro-tip</summary>
+    
+    Also you can create a [Custom Role](https://console.cloud.google.com/iam-admin/roles) with the following permissions:
+    
+    ```text
+    appengine.applications.get
+    appengine.operations.get
+    appengine.services.list
+    appengine.services.update
+    appengine.versions.create
+    appengine.versions.list
+    appengine.versions.update
+    cloudbuild.builds.create
+    cloudbuild.builds.get
+    iam.serviceAccounts.actAs
+    storage.buckets.get
+    storage.objects.create
+    storage.objects.delete
+    storage.objects.get
+    storage.objects.list
+    ```
+    </details>
 
     Create json key and base64-encode it:
 
