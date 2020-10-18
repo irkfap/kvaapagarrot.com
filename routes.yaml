@@ -13,9 +13,32 @@ handlers:
     static_files: public/site.webmanifest
     upload: public/site\.webmanifest
 
-  # Icons
-  - url: /fontello
-    static_dir: public/fontello
+  # Web fonts
+  - url: /(.*\.eot)$
+    mime_type: application/vnd.ms-fontobject
+    static_files: public/\1
+    upload: public/.*\.eot$
+    http_headers:
+      Access-Control-Allow-Origin: "*"
+
+  - url: /(.*\.ttf)$
+    mime_type: font/ttf
+    static_files: public/\1
+    upload: public/.*\.ttf$
+    http_headers:
+      Access-Control-Allow-Origin: "*"
+
+  - url: /(.*\.woff)$
+    mime_type: font/woff
+    static_files: public/\1
+    upload: public/.*\.woff$
+    http_headers:
+      Access-Control-Allow-Origin: "*"
+
+  - url: /(.*\.woff2)$
+    mime_type: font/woff2
+    static_files: public/\1
+    upload: public/.*\.woff2$
     http_headers:
       Access-Control-Allow-Origin: "*"
 
