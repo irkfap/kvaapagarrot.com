@@ -1,0 +1,29 @@
+name: app-engine
+
+on:
+  push:
+    branches:
+      - main-kampf
+
+jobs:
+  deploy-gae:
+    name: App Engine Deployment
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Import Service Account key
+        run: echo "${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}" | base64 -d > /tmp/auth.json
+
+      - name: GCloud Auth
+        run: |
+          gcloud --quiet auth \
+          activate-service-account "${{ secrets.GCP_SA_EMAIL }}" \
+          --key-file=/tmp/auth.json \
+          --project="${{ secrets.GCLOUD_PROJECT_ID }}"
+
+      - name: Deploy
+        run: |
+          gcloud app deploy app.yaml --quiet -v "${GITHUB_ACTOR}-${GITHUB_SHA:0:7}"
