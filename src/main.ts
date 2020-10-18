@@ -1,4 +1,4 @@
-import fastify from 'fastify';
+import fastify, {FastifyReply, FastifyRequest} from 'fastify';
 
 const PORT = process.env['PORT'] || '3000';
 
@@ -6,11 +6,12 @@ const server = fastify();
 
 server.get('/_ah/warmup', async () => {
   // Handle warmup logic.
-  return 'OK\n';
+  return 'OK';
 });
 
-server.get('/', async () => {
-  return 'OK\n';
+server.get('/ping', async (_request: FastifyRequest, reply: FastifyReply) => {
+  reply.header('Strict-Transport-Security', 'max-age=63072000; includeSubDomains; preload');
+  return 'OK';
 });
 
 server.listen(PORT, (err, address) => {

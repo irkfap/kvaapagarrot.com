@@ -5,3 +5,6 @@ dist/
 # Jetbrains
 .idea/**
 .ijwb/**
+
+# MacOS
+.DS_Store
