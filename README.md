@@ -23,7 +23,7 @@ yarn deploy
     <details>
     <summary>Pro-tip</summary>
     
-    Also you can create a [Custom Role](https://console.cloud.google.com/iam-admin/roles) with the following permissions:
+    You can also create a [Custom Role](https://console.cloud.google.com/iam-admin/roles) with the following permissions:
     
     ```text
     appengine.applications.get
