@@ -9,6 +9,10 @@ handlers:
     static_files: public/robots.txt
     upload: public/robots\.txt
 
+  - url: /site\.webmanifest
+    static_files: public/site.webmanifest
+    upload: public/site\.webmanifest
+
   # Icons
   - url: /fontello
     static_dir: public/fontello
@@ -32,9 +36,9 @@ handlers:
       Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
 
   # Other static files
-  - url: /(.*\.(html|css|js|map))$
+  - url: /(.*\.(html|css|js|map|xml))$
     static_files: public/\1
-    upload: public/.*\.(html|css|js|map)$
+    upload: public/.*\.(html|css|js|map|xml)$
     http_headers:
       Access-Control-Allow-Origin: "*"
 
