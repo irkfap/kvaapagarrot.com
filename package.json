@@ -8,6 +8,7 @@
   "scripts": {
     "build": "tsc",
     "build-frontend": "",
+    "deploy": "gcloud app deploy app.yaml --project kvaapagarrot --quiet",
     "gcp-build": "yarn build",
     "start": "node dist/main"
   },
