@@ -1,7 +1,13 @@
 name: app-engine
 
+env:
+  GCLOUD_PROJECT_ID: kvaapagarrot
+
 on:
   push:
+    branches:
+      - main-kampf
+  pull_request:
     branches:
       - main-kampf
 
@@ -9,6 +15,9 @@ jobs:
   deploy-gae:
     name: App Engine Deployment
     runs-on: ubuntu-latest
+    # Map a step output to a job output
+    outputs:
+      version-url: ${{ steps.version-url.outputs.url }}
 
     steps:
       - name: Checkout
@@ -22,8 +31,14 @@ jobs:
           gcloud --quiet auth \
           activate-service-account "${{ secrets.GCP_SA_EMAIL }}" \
           --key-file=/tmp/auth.json \
-          --project="${{ secrets.GCLOUD_PROJECT_ID }}"
+          --project="${GCLOUD_PROJECT_ID}"
 
       - name: Deploy
         run: |
           gcloud app deploy app.yaml --quiet -v "${GITHUB_ACTOR}-${GITHUB_SHA:0:7}"
+
+      - id: version-url
+        name: Get deployed app version URL
+        run: |
+          VERSION_URL=$(gcloud app versions describe "${GITHUB_ACTOR}-${GITHUB_SHA:0:7}" --service=default --format "value(versionUrl)") && \
+          echo "::set-output name=url::$(echo $VERSION_URL)"

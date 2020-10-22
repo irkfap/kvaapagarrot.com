@@ -32,10 +32,8 @@ yarn deploy
 
 3. Add project secrets in GitHub repo Settings → Secrets:
 
-    `GCLOUD_PROJECT_ID` — GCP Project ID
-
     `GCP_SA_EMAIL` — Service Account Email
 
     `GOOGLE_APPLICATION_CREDENTIALS` — base64-encoded Service Account key
 
-4. Customize Workflow as needed in `.github/workflows/main.yml`
+4. Customize Workflow as needed in `.github/workflows/main.yml` (set `GCLOUD_PROJECT_ID`, etc.)
