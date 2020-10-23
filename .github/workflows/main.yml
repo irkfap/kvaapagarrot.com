@@ -51,7 +51,7 @@ jobs:
     needs: [deploy-gae]
     env:
       LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
-      LHCI_BUILD_CONTEXT__CURRENT_HASH: ${GITHUB_SHA}
+      LHCI_BUILD_CONTEXT__CURRENT_HASH: ${{ github.sha }}
 
     steps:
       - name: Audit URLs using Lighthouse
