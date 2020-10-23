@@ -40,5 +40,21 @@ jobs:
       - id: version-url
         name: Get deployed app version URL
         run: |
-          VERSION_URL=$(gcloud app versions describe "${GITHUB_ACTOR}-${GITHUB_SHA:0:7}" --service=default --format "value(versionUrl)") && \
+          VERSION_URL=$(gcloud app versions describe "${GITHUB_ACTOR}-${GITHUB_SHA:0:7}" --service=default --format "value(versionUrl)")
+          echo $VERSION_URL
           echo "::set-output name=url::$(echo $VERSION_URL)"
+
+  lhci:
+    needs: [deploy-gae]
+    env:
+      LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+    name: Lighthouse Audit
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: run Lighthouse CI
+        run: |
+          npm install -g @lhci/cli@0.5.x
+          lhci autorun \
+          --assert.preset=lighthouse:recommended \
+          --collect.url="${{needs.deploy-gae.outputs.version-url}}"

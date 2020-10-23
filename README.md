@@ -37,3 +37,5 @@ yarn deploy
     `GOOGLE_APPLICATION_CREDENTIALS` — base64-encoded Service Account key
 
 4. Customize Workflow as needed in `.github/workflows/main.yml` (set `GCLOUD_PROJECT_ID`, etc.)
+
+5. Set `LHCI_GITHUB_APP_TOKEN` to enable [Lighthouse CI](https://github.com/apps/lighthouse-ci) audit.
