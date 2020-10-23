@@ -12,6 +12,7 @@ handlers:
   - url: /site\.webmanifest
     static_files: public/site.webmanifest
     upload: public/site\.webmanifest
+    expiration: "10m"
 
   # Web fonts
   - url: /(.*\.eot)$
@@ -55,6 +56,7 @@ handlers:
     redirect_http_response_code: 301
     static_files: public/index.html
     upload: public/index.html
+    expiration: "1s"
     http_headers:
       Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
 
@@ -62,6 +64,7 @@ handlers:
   - url: /(.*\.(html|css|js|map|xml))$
     static_files: public/\1
     upload: public/.*\.(html|css|js|map|xml)$
+    expiration: "10m"
     http_headers:
       Access-Control-Allow-Origin: "*"
 
