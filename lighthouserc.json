@@ -1,0 +1,16 @@
+{
+  "ci": {
+    "assert": {
+      "preset": "lighthouse:recommended",
+      "assertions": {
+        "render-blocking-resources": ["warn", {"maxLength": 0}],
+        "offline-start-url": "off",
+        "service-worker": "off",
+        "unused-javascript": ["warn", {"maxLength": 2}],
+        "works-offline": "off",
+        "no-unload-listeners": "off",
+        "uses-rel-preconnect": ["warn", {"maxLength": 4}]
+      }
+    }
+  }
+}
