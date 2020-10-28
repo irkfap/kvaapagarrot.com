@@ -7,15 +7,15 @@
   "ascent": 850,
   "glyphs": [
     {
-      "uid": "54fad985c676a007c79c346ebaec29d6",
-      "css": "deviantart",
-      "code": 61885,
-      "src": "fontawesome"
-    },
-    {
       "uid": "8e04c98c8f5ca0a035776e3001ad2638",
       "css": "facebook",
       "code": 61594,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "54fad985c676a007c79c346ebaec29d6",
+      "css": "deviantart",
+      "code": 61885,
       "src": "fontawesome"
     },
     {
@@ -28,6 +28,12 @@
       "uid": "4c1ef492f1d2c39a2250ae457cee2a6e",
       "css": "instagram",
       "code": 61805,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "b501bc7737850366e98043c585163eec",
+      "css": "behance-squared",
+      "code": 61877,
       "src": "fontawesome"
     }
   ]
