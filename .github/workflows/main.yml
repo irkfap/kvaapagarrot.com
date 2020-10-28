@@ -12,8 +12,20 @@ on:
       - main-kampf
 
 jobs:
+
+  cancel-previous:
+    name: Cancel Previous Jobs
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.6.0
+        with:
+          access_token: ${{ github.token }}
+
   deploy-gae:
     name: App Engine Deployment
+    # Skip workflow entirely for [skip ci] commits
+    if: ${{ !contains(github.event.commits[0].message, '[skip ci]') && !contains(github.event.commits[0].message, '[no ci]') }}
     runs-on: ubuntu-latest
     # Map a step output to a job output
     outputs:
@@ -35,7 +47,7 @@ jobs:
 
       - name: Deploy
         run: |
-          gcloud app deploy app.yaml --quiet -v "${GITHUB_ACTOR}-${GITHUB_SHA:0:7}"
+          gcloud app deploy app.yaml --quiet --no-promote --version "${GITHUB_ACTOR}-${GITHUB_SHA:0:7}"
 
       - id: version-url
         name: Get deployed app version URL
@@ -67,3 +79,26 @@ jobs:
           uploadArtifacts: true # save results as an action artifacts
           temporaryPublicStorage: true # upload lighthouse report to the temporary storage
           configPath: ${{ github.workspace }}/lighthouserc.json
+
+  production:
+    name: Update Production
+    runs-on: ubuntu-latest
+    # Run only after successful deployment and Lighthouse audit
+    needs: [deploy-gae, lighthouse]
+    # Run only on push to master
+    if: ${{ success() && github.ref == 'refs/heads/main-kampf' }}
+
+    steps:
+      - name: Import Service Account key
+        run: echo "${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}" | base64 -d > /tmp/auth.json
+
+      - name: GCloud Auth
+        run: |
+          gcloud --quiet auth \
+          activate-service-account "${{ secrets.GCP_SA_EMAIL }}" \
+          --key-file=/tmp/auth.json \
+          --project="${GCLOUD_PROJECT_ID}"
+
+      - name: Promote deployed version to production
+        run: |
+          gcloud app versions migrate "${GITHUB_ACTOR}-${GITHUB_SHA:0:7}" --service=default
