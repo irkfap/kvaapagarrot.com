@@ -8,6 +8,7 @@ handlers:
   - url: /((robots|humans)\.txt)$
     static_files: public/\1
     upload: public/(robots|humans)\.txt$
+    expiration: "1s"
     http_headers:
       Access-Control-Allow-Origin: "*"
 

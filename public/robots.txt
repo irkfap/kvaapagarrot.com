@@ -1,1 +1,3 @@
 User-agent: *
+
+DaumWebMasterTool:c703882cef018a5db762b03c3a29cd2ccbde51f0613752983b4ee86f7b62ec63:BL4AlHR+8JtCTunhTye7cQ==
