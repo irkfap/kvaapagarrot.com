@@ -47,7 +47,7 @@ jobs:
 
       - name: Deploy
         run: |
-          gcloud app deploy app.yaml --quiet --no-promote --version "${GITHUB_ACTOR}-${GITHUB_SHA:0:7}"
+          gcloud --quiet app deploy app.yaml --no-promote --version "${GITHUB_ACTOR}-${GITHUB_SHA:0:7}"
 
       - id: version-url
         name: Get deployed app version URL
@@ -101,4 +101,4 @@ jobs:
 
       - name: Promote deployed version to production
         run: |
-          gcloud app versions migrate "${GITHUB_ACTOR}-${GITHUB_SHA:0:7}" --service=default
+          gcloud --quiet app versions migrate "${GITHUB_ACTOR}-${GITHUB_SHA:0:7}" --service=default
