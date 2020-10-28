@@ -1,0 +1,17 @@
+/* TEAM */
+
+    Maintainer: Stepan Legachev
+    Contact: https://sib.li
+    Twitter: @siberex
+    From: Saint Petersburg, Russia
+
+    Support Team: Irkfap Community
+    Contact: https://irkfap.com
+    Twitter: @irkfap
+    From: Irkutsk, Russia
+
+/* SITE */
+
+    Source Code: https://github.com/irkfap/kvaapagarrot.com
+
+    Inquiries: devopsina@kvaapagarrot.com
