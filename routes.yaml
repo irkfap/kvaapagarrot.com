@@ -5,14 +5,19 @@ handlers:
     upload: public/favicon\.ico
     expiration: "7d"
 
-  - url: /robots\.txt
-    static_files: public/robots.txt
-    upload: public/robots\.txt
+  - url: /((robots|humans)\.txt)$
+    static_files: public/\1
+    upload: public/(robots|humans)\.txt$
+    http_headers:
+      Access-Control-Allow-Origin: "*"
 
   - url: /site\.webmanifest
+    mime_type: application/json
     static_files: public/site.webmanifest
     upload: public/site\.webmanifest
     expiration: "10m"
+    http_headers:
+      Access-Control-Allow-Origin: "*"
 
   # Web fonts
   - url: /(.*\.eot)$
