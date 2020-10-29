@@ -1,1 +1,3 @@
-user-agent: *
+User-agent: *
+
+Sitemap: https://kvaapagarrot.com/sitemap.xml
