@@ -1,7 +1,6 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <!--<base href="https://kvaapagarrot.com/">-->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -69,6 +68,7 @@
     }
     h1, h2, h3 {
       font-weight: 500;
+      font-size: 30pt;
     }
 
     body {
@@ -76,11 +76,29 @@
       color: #fff;
       margin: 2em;
     }
-    a {
-      color: #8e8eff;
-    }
+
     p {
       font-size: 18pt;
+    }
+
+    a {
+      color: #8e8eff;
+      text-decoration: none;
+    }
+    a:hover, a:focus {
+      outline: none;
+      color: #82c4ff;
+      text-decoration: underline;
+      text-underline-position: under;
+      /*noinspection CssUnknownProperty*/
+      text-decoration-thickness: 0.9pt;
+    }
+    a:active:focus {
+      outline: none;
+    }
+    a:hover > .social-icon,
+    a:focus > .social-icon {
+      color: #fff;
     }
 
     @font-face {
@@ -94,6 +112,8 @@
       font-weight: normal;
       font-style: normal;
       font-display: swap;
+      /* , , , ,  */
+      unicode-range: U+F16D, U+F09A, U+F189, U+F1BD, U+F1B5;
     }
 
     .social-icon {
@@ -106,23 +126,46 @@
       text-align: center;
       font-variant: normal;
       text-transform: none;
-      line-height: 1em;
+      line-height: 0.9em;
       margin-right: 0.4em;
       color: #999;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
+      user-select: none;
     }
+
+    @media print {
+      body {
+        background: #fff;
+        color: #000;
+      }
+
+      a {
+        color: #2e2ea0;
+      }
+      a[href^="http"]::after{
+        content: " (" attr(href) ") ";
+        color: #666;
+        font-size: 70%;
+        vertical-align: 0;
+      }
+
+      .social-icon {
+        color: #777;
+      }
+    }
+
   </style>
 </head>
 <body role="document">
 
-  <h1>Margarita Kvaapagarrot</h1>
+  <h1 lang="en">Margarita Kvaapagarrot</h1>
 
-  <p><a href="https://www.instagram.com/m.kvaapagarrot/"><i class="social-icon icon-instagram">&#xf16d;</i>Instagram</a></p>
-  <p><a href="https://www.facebook.com/kvaapagarrot"><i class="social-icon icon-facebook">&#xf09a;</i>Facebook</a></p>
-  <p><a href="https://vk.com/kvaapagarrot"><i class="social-icon icon-vkontakte">&#xf189;</i>VK</a></p>
-  <p><a href="https://deviantart.com/kvaapagarrots/"><i class="social-icon icon-deviantart">&#xf1bd;</i>DeviantArt</a></p>
-  <p><a href="https://www.behance.net/kvaapagarrot"><i class="social-icon icon-behance-squared">&#xf1b5;</i>Behance</a></p>
+  <p lang="en"><a href="https://www.instagram.com/m.kvaapagarrot/"><i class="social-icon icon-instagram">&#xf16d;</i>Instagram</a></p>
+  <p lang="en"><a href="https://www.facebook.com/kvaapagarrot"><i class="social-icon icon-facebook">&#xf09a;</i>Facebook</a></p>
+  <p lang="en"><a href="https://vk.com/kvaapagarrot"><i class="social-icon icon-vkontakte">&#xf189;</i>VK</a></p>
+  <p lang="en"><a href="https://deviantart.com/kvaapagarrots/"><i class="social-icon icon-deviantart">&#xf1bd;</i>DeviantArt</a></p>
+  <p lang="en"><a href="https://www.behance.net/kvaapagarrot"><i class="social-icon icon-behance-squared">&#xf1b5;</i>Behance</a></p>
 
 
 
