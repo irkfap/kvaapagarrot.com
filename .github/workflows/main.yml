@@ -15,6 +15,8 @@ jobs:
 
   cancel-previous:
     name: Cancel Previous Jobs
+    # Skip workflow entirely for [skip ci] commits
+    if: ${{ !contains(github.event.commits[0].message, '[skip ci]') && !contains(github.event.commits[0].message, '[no ci]') }}
     runs-on: ubuntu-latest
     steps:
       - name: Cancel Previous Runs
