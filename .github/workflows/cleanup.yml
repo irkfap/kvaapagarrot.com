@@ -5,8 +5,8 @@ env:
 
 on:
   schedule:
-    # At 15:33 every Sunday
-    - cron:  '33 15 * * 0'
+    # At 00:00 every Sunday
+    - cron:  '0 0 * * 0'
 
 jobs:
 
@@ -31,6 +31,4 @@ jobs:
       - name: Delete old versions
         run: |
           LIST=($(gcloud app versions list --service=default --sort-by="~LAST_DEPLOYED" --filter="TRAFFIC_SPLIT=0" | awk '{ print $2 }' | tail -n +4))
-          echo Versions for deletion:
-          printf "%s\n" "${LIST[@]}"
           gcloud --quiet app versions delete --service=default "${LIST[@]}"
