@@ -1,5 +1,5 @@
 import * as path from 'path';
-import {fileURLToPath} from "url";
+import {fileURLToPath} from 'url';
 import fastify, {FastifyReply, FastifyRequest} from 'fastify';
 import fastifyStatic from 'fastify-static';
 

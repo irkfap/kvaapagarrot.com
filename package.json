@@ -10,7 +10,7 @@
   },
   "type": "module",
   "scripts": {
-    "build": "tsc",
+    "build": "rollup -c",
     "build-frontend": "",
     "deploy": "gcloud app deploy app.yaml --project kvaapagarrot --quiet",
     "gcp-build": "yarn build",
