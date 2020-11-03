@@ -15,7 +15,7 @@
     "deploy": "gcloud app deploy app.yaml --project kvaapagarrot --quiet",
     "gcp-build": "yarn build",
     "start": "node dist/main",
-    "watch": "rollup -c -w"
+    "watch": "NODE_ENV=development rollup -c -w"
   },
   "dependencies": {
     "fastify": "^3.6.0",
