@@ -13,6 +13,7 @@ const server = fastify();
 server.register(fastifyStatic, {
   root: path.join(__dirname, '..', 'public'),
   prefix: '/',
+  wildcard: false,
 });
 
 server.get('/_ah/warmup', async () => {
