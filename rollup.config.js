@@ -2,7 +2,8 @@ import typescript from '@rollup/plugin-typescript';
 import {terser} from 'rollup-plugin-terser';
 import run from '@rollup/plugin-run';
 
-const dev = process.env.ROLLUP_WATCH === 'true';
+const isWatchMode = process.env['ROLLUP_WATCH'] === 'true';
+const isDev = process.env['NODE_ENV'] === 'development';
 
 export default {
   input: 'src/main.ts',
@@ -10,8 +11,8 @@ export default {
   output: [{
     dir: 'dist',
     format: 'es',
-    // @fixme use terser for production only
-    plugins: [terser()],
+    // Use terser for production only
+    plugins: [!isDev && terser()],
     sourcemap: true
   }],
 
@@ -24,7 +25,7 @@ export default {
 
   plugins: [
     typescript(),
-    dev && run({
+    isWatchMode && run({
       execArgv: ['-r', 'source-map-support/register']
     })
   ],
