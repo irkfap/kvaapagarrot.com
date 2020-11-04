@@ -1,5 +1,10 @@
 # [kvaapagarrot.com](https://kvaapagarrot.com)
 
+### Dev server
+
+```bash
+yarn watch
+```
 
 ### Manual deployment
 

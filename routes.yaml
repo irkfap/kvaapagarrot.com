@@ -56,16 +56,6 @@ handlers:
     http_headers:
       Access-Control-Allow-Origin: "*"
 
-  # Static index page
-  - url: /
-    secure: always
-    redirect_http_response_code: 301
-    static_files: public/index.html
-    upload: public/index.html
-    expiration: "1s"
-    http_headers:
-      Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
-
   # Other static files
   - url: /(.*\.(html|css|js|map|xml))$
     static_files: public/\1
@@ -74,7 +64,7 @@ handlers:
     http_headers:
       Access-Control-Allow-Origin: "*"
 
-  - url: /ping
+  - url: /.*
     secure: always
     redirect_http_response_code: 301
     script: auto
