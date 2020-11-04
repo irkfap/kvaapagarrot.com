@@ -65,7 +65,7 @@ server.register(fastifyStatic, {
 eta.configure({
   // Whether or not to cache templates if `name` or `filename` is passed
   cache: !isDev,
-  useWith: true, // Make data available on the global object instead of varName
+  useWith: false,
 });
 
 server.register(pointOfView, {
@@ -74,6 +74,13 @@ server.register(pointOfView, {
   },
   root: path.join(__dirname, '..', 'templates'),
   viewExt: 'eta',
+});
+
+server.addHook('preHandler', function (_request, reply, done) {
+  reply.locals = {
+    isDev,
+  };
+  done();
 });
 
 server.get('/_ah/warmup', async (_request: FastifyRequest, reply: FastifyReply) => {
