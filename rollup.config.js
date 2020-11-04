@@ -20,7 +20,9 @@ export default {
     'path',
     'url',
     'fastify',
-    'fastify-static'
+    'fastify-static',
+    'point-of-view',
+    'eta',
   ],
 
   plugins: [
