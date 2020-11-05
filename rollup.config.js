@@ -1,6 +1,9 @@
 import typescript from '@rollup/plugin-typescript';
-import {terser} from 'rollup-plugin-terser';
-import run from '@rollup/plugin-run';
+// import {terser} from 'rollup-plugin-terser';
+// import run from '@rollup/plugin-run';
+import nodeResolve from '@rollup/plugin-node-resolve';
+import commonjs from '@rollup/plugin-commonjs';
+import json from '@rollup/plugin-json';
 
 const isWatchMode = process.env['ROLLUP_WATCH'] === 'true';
 const isDev = process.env['NODE_ENV'] === 'development';
@@ -9,27 +12,50 @@ export default {
   input: 'src/main.ts',
 
   output: [{
-    dir: 'dist',
-    format: 'es',
+    file: 'dist/bundle.js',
+    format: 'cjs',
     // Use terser for production only
-    plugins: [!isDev && terser()],
+    // plugins: [!isDev && terser()],
     sourcemap: true
   }],
 
   external: [
+    'assert',
+    'buffer',
+    'console',
+    'crypto',
+    'depd',
+    'events',
+    'fs',
+    'glob',
+    'http',
+    'http2',
+    'https',
+    'tiny-lru',
+    'net',
+    'os',
     'path',
+    'querystring',
+    'readable-stream',
+    'semver',
+    'stream',
+    'tty',
     'url',
-    'fastify',
-    'fastify-static',
-    'point-of-view',
-    'eta',
+    'vm',
+    'util',
   ],
 
   plugins: [
     typescript(),
-    isWatchMode && run({
-      execArgv: ['-r', 'source-map-support/register']
-    })
+    commonjs(),
+    json(),
+    nodeResolve({
+      preferBuiltins: true
+    }),
+
+    // isWatchMode && run({
+    //   execArgv: ['-r', 'source-map-support/register']
+    // }),
   ],
 
   watch: {
