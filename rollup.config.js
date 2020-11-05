@@ -1,6 +1,6 @@
 import typescript from '@rollup/plugin-typescript';
 import {terser} from 'rollup-plugin-terser';
-// import run from '@rollup/plugin-run';
+import run from '@rollup/plugin-run';
 import nodeResolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import json from '@rollup/plugin-json';
@@ -19,14 +19,14 @@ export default {
       ecma: 2016,
       compress: {
         arguments: true,
-        passes: 5,
+        passes: isDev ? 1 : 3,
         toplevel: true,
       },
       format: {
         comments: false,
       }
     })],
-    // sourcemap: true
+    sourcemap: isDev
   }],
 
   external: [
@@ -34,20 +34,20 @@ export default {
     'buffer',
     'console',
     'crypto',
-    'depd',
+    'depd', // npm, eval
     'events',
     'fs',
-    'glob',
+    'glob', // npm
     'http',
     'http2',
     'https',
-    'tiny-lru',
+    'tiny-lru', // npm
     'net',
     'os',
     'path',
     'querystring',
-    'readable-stream',
-    'semver',
+    'readable-stream', // npm, circular deps
+    'semver', // npm, circular deps
     'stream',
     'tty',
     'url',
@@ -63,9 +63,9 @@ export default {
       preferBuiltins: true
     }),
 
-    // isWatchMode && run({
-    //   execArgv: ['-r', 'source-map-support/register']
-    // }),
+    isWatchMode && run({
+      execArgv: ['-r', 'source-map-support/register']
+    }),
   ],
 
   watch: {
