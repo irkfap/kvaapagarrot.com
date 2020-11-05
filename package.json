@@ -18,13 +18,10 @@
   },
   "dependencies": {
     "depd": "^2.0.0",
-    "eta": "^1.11.0",
-    "fastify": "^3.6.0",
-    "fastify-static": "^3.3.0",
-    "point-of-view": "^4.6.0",
+    "glob": "^7.1.6",
     "readable-stream": "^3.6.0",
-    "tiny-lru": "^7.0.6",
-    "tslib": "^2.0.3"
+    "semver": "^7.3.2",
+    "tiny-lru": "^7.0.6"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^16.0.0",
@@ -34,11 +31,16 @@
     "@rollup/plugin-typescript": "^6.1.0",
     "@types/node": "^14.11.10",
     "chokidar": "^3.4.3",
+    "eta": "^1.11.0",
+    "fastify": "^3.7.0",
+    "fastify-static": "^3.3.0",
     "long": "^4.0.0",
     "pino-pretty": "^4.3.0",
+    "point-of-view": "^4.6.0",
     "rollup": "^2.33.1",
     "rollup-plugin-terser": "^7.0.2",
     "source-map-support": "^0.5.19",
+    "tslib": "^2.0.3",
     "typescript": "^4.0.3"
   }
 }

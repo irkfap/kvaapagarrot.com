@@ -1,5 +1,5 @@
 import typescript from '@rollup/plugin-typescript';
-// import {terser} from 'rollup-plugin-terser';
+import {terser} from 'rollup-plugin-terser';
 // import run from '@rollup/plugin-run';
 import nodeResolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
@@ -15,7 +15,7 @@ export default {
     file: 'dist/bundle.js',
     format: 'cjs',
     // Use terser for production only
-    // plugins: [!isDev && terser()],
+    plugins: [!isDev && terser()],
     sourcemap: true
   }],
 
