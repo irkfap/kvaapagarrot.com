@@ -13,7 +13,7 @@
     "build-frontend": "",
     "deploy": "gcloud app deploy app.yaml --project kvaapagarrot --quiet",
     "gcp-build": "yarn build",
-    "start": "node dist/main",
+    "start": "node dist/bundle.js",
     "watch": "NODE_ENV=development rollup -c -w"
   },
   "dependencies": {
