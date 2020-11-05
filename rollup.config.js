@@ -13,7 +13,7 @@ export default {
     format: 'es',
     // Use terser for production only
     plugins: [!isDev && terser()],
-    sourcemap: true
+    sourcemap: isDev
   }],
 
   external: [

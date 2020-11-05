@@ -10,10 +10,10 @@
   },
   "type": "module",
   "scripts": {
-    "build": "rollup -c",
+    "build": "NODE_ENV=development rollup -c",
     "build-frontend": "",
     "deploy": "gcloud app deploy app.yaml --project kvaapagarrot --quiet",
-    "gcp-build": "yarn build",
+    "gcp-build": "NODE_ENV=production rollup -c",
     "start": "node dist/main",
     "watch": "NODE_ENV=development rollup -c -w"
   },
