@@ -1,7 +1,11 @@
 /.github/
 /_assets/
+/scripts/
 /*.yaml
 *.md
+
+lighthouserc.json
+sonar-project.properties
 
 .gcloudignore
 .git
