@@ -15,8 +15,18 @@ export default {
     file: 'dist/bundle.js',
     format: 'cjs',
     // Use terser for production only
-    plugins: [!isDev && terser()],
-    sourcemap: true
+    plugins: [!isDev && terser({
+      ecma: 2016,
+      compress: {
+        arguments: true,
+        passes: 5,
+        toplevel: true,
+      },
+      format: {
+        comments: false,
+      }
+    })],
+    // sourcemap: true
   }],
 
   external: [
