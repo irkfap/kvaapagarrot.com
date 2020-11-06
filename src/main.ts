@@ -5,7 +5,7 @@ import {FastifyError} from 'fastify-error';
 import fastifyStatic from 'fastify-static';
 import pointOfView from 'point-of-view';
 import * as eta from 'eta';
-import glob from 'tiny-glob';
+import glob from 'fast-glob';
 import {
   symbolTimerStart,
   ErrorPayload
@@ -124,8 +124,12 @@ server.get('/_ah/warmup', async (_request, reply) => {
     console.info('Precaching templates...');
 
     const templates = await glob(`**/*.${TPL_EXTENSION}`, {
+      braceExpansion: false,
+      caseSensitiveMatch: false,
       cwd: TEMPLATE_DIR,
-      filesOnly: true,
+      extglob: false,
+      followSymbolicLinks: false,
+      onlyFiles: true,
     });
 
     const results = templates.map(
