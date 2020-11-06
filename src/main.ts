@@ -21,13 +21,14 @@ interface ErrorPayload {
   validation?: ValidationResult[],
 }
 
+const symbolTimerStart = Symbol('timerStart');
 interface ServerRequest extends FastifyRequest {
-  timerStart: bigint;
+  symbolTimerStart: bigint;
 }
 
 const server = fastify();
 
-server.decorateRequest('timerStart', '');
+server.decorateRequest(symbolTimerStart, null);
 
 server.setErrorHandler((error: FastifyError, _request: FastifyRequest, reply: FastifyReply): void => {
   const statusCode = error.statusCode || 500;
@@ -90,13 +91,13 @@ server.addHook('preHandler', function (_request, reply, done) {
 });
 
 server.addHook('onRequest', (request, _reply, done) => {
-  (request as ServerRequest).timerStart = process.hrtime.bigint();
+  (request as ServerRequest).symbolTimerStart = process.hrtime.bigint();
   done();
 });
 
 server.addHook('onSend', (request, reply, _payload, done) => {
   const timerEnd = process.hrtime.bigint();
-  const timerStart = (request as ServerRequest).timerStart;
+  const timerStart = (request as ServerRequest).symbolTimerStart;
   let duration = Number(timerEnd - timerStart) / 1e6; // ms
   duration = Math.round((duration + Number.EPSILON) * 1e3) / 1e3;
   reply.header('Server-Timing', `render;dur=${duration}`);
