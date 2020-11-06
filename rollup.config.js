@@ -23,6 +23,7 @@ export default {
     'fastify-static',
     'point-of-view',
     'eta',
+    'tiny-glob',
   ],
 
   plugins: [

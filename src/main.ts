@@ -5,6 +5,7 @@ import {FastifyError} from 'fastify-error';
 import fastifyStatic from 'fastify-static';
 import pointOfView from 'point-of-view';
 import * as eta from 'eta';
+import glob from 'tiny-glob';
 import {
   symbolTimerStart,
   ErrorPayload
@@ -17,6 +18,7 @@ const __dirname = path.dirname(__filename)
 
 const STATIC_DIR = path.join(__dirname, '..', 'public');
 const TEMPLATE_DIR = path.join(__dirname, '..', 'templates');
+const TPL_EXTENSION = 'eta';
 
 const isDev = process.env['NODE_ENV'] === 'development';
 
@@ -77,7 +79,7 @@ server.register(pointOfView, {
     eta
   },
   root: TEMPLATE_DIR,
-  viewExt: 'eta',
+  viewExt: TPL_EXTENSION,
 });
 
 server.addHook('preHandler', function (_request, reply, done) {
@@ -109,9 +111,30 @@ server.addHook('onResponse', (request, reply, done) => {
   done();
 });
 
+/**
+ * https://cloud.google.com/appengine/docs/standard/nodejs/how-instances-are-managed#warmup_requests
+ * Warmup requests are a specific type of loading request that load application code into an instance ahead of time,
+ * before any live requests are made. Manual or basic scaling instances do not receive an `/_ah/warmup` request.
+ */
 server.get('/_ah/warmup', async (_request, reply) => {
-  // Handle warmup logic.
-  // ...
+  console.info('Warmup initiated');
+
+  // Pre-cache all templates to memory
+  if (eta.config.cache) {
+    console.info('Precaching templates...');
+
+    const templates = await glob(`**/*.${TPL_EXTENSION}`, {
+      cwd: TEMPLATE_DIR,
+    });
+
+    const results = templates.map((async tpl => {
+      const res = await eta.renderFile(tpl, {});
+      console.info(`${res.length}\t${tpl}`);
+    }));
+
+    await Promise.all(results);
+    console.info('Done.');
+  }
 
   reply
     .header('Content-Type', 'application/json; charset=utf-8')
