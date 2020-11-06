@@ -21,7 +21,7 @@ env_variables:
 inbound_services:
   - warmup
 
-default_expiration: "3d"
+default_expiration: "7d"
 
 includes:
   - routes.yaml
