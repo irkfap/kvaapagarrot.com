@@ -1,10 +1,19 @@
-import {join as pathJoin} from 'path';
+import {join as pathJoin, basename, extname} from 'path';
 import glob from 'fast-glob';
 import {Options} from 'fast-glob/out/settings';
 
+interface RouteType {
+  url: string,
+  static_files: string,
+  upload: string,
+  mime_type?: string,
+  expiration?: string,
+}
+
 const STATIC_DIR = pathJoin(process.cwd(), 'public');
 
-const ADD_MIME_TYPES = {
+type RouteFlagsType = { [key: string]: string | {[key:string]: string} };
+const ROUTE_FLAGS: RouteFlagsType = {
   'site.webmanifest' : {mime_type: 'application/json', expiration: '10m'},
   '*.ico' : 'image/x-icon',
   'robots.txt': {expiration: '1s'},
@@ -31,18 +40,44 @@ const GLOB_OPTIONS: Options = {
   onlyFiles: true,
 };
 
-(async () => {
+const createRoute = (relPath: string, expand? : boolean): RouteType => {
+  let routeFlags = {};
+  if (expand) {
+    const extGlob = `*${extname(relPath)}`;
+    if (typeof ROUTE_FLAGS[extGlob] === 'string') {
+      routeFlags = {mime_type: ROUTE_FLAGS[extGlob]};
+    } else {
+      const fName = basename(relPath);
+      routeFlags = ROUTE_FLAGS[fName];
+    }
+  }
 
-  // const pattern = '**/('+Object.keys(ADD_MIME_TYPES).join('|')+')';
-  const pattern = Object.keys(ADD_MIME_TYPES).map(k => `**/${k}`);
+  return {
+    url: `/${relPath}`,
+    static_files: `public/${relPath}`,
+    upload: `public/${relPath}`,
+    ...routeFlags,
+  };
+};
+
+(async () => {
+  let routes: RouteType[] = [];
+
+  // const pattern = '**/('+Object.keys(ROUTE_FLAGS).join('|')+')';
+  const pattern = Object.keys(ROUTE_FLAGS).map(k => `**/${k}`);
 
   const filesKnown = await glob(pattern , GLOB_OPTIONS);
+  routes = routes.concat(
+      filesKnown.map(path => createRoute(path, true))
+  );
 
   const filesAll = await glob('**/*.*' , {
     ...GLOB_OPTIONS,
     ignore: IGNORE_FILES.concat(pattern),
   });
+  routes = routes.concat(
+    filesAll.map(path => createRoute(path))
+  );
 
-  console.log(filesKnown.concat(filesAll));
-
+  console.log(routes);
 })();
