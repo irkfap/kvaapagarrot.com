@@ -97,15 +97,15 @@ server.addHook('onRequest', (request, _reply, done) => {
 server.addHook('onSend', (request, reply, _payload, done) => {
   const timerEnd = process.hrtime.bigint();
   const timerStart = (request as ServerRequest).timerStart;
-  let duration = Number(timerEnd - timerStart) / 1000000; // ms
-  duration = Math.round((duration + Number.EPSILON) * 100) / 100;
-  reply.header('Server-Timing', `total;dur=${duration}`);
+  let duration = Number(timerEnd - timerStart) / 1e6; // ms
+  duration = Math.round((duration + Number.EPSILON) * 1e3) / 1e3;
+  reply.header('Server-Timing', `render;dur=${duration}`);
   done();
 });
 
 server.addHook('onResponse', (request, reply, done) => {
   if (isDev) {
-    const duration = Math.round((reply.getResponseTime() + Number.EPSILON) * 100) / 100;
+    const duration = Math.round((reply.getResponseTime() + Number.EPSILON) * 1e3) / 1e3;
     console.debug(`${duration}ms\t${request.method}\t${request.url}`);
   }
   done();
