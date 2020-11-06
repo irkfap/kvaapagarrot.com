@@ -21,7 +21,13 @@ interface ErrorPayload {
   validation?: ValidationResult[],
 }
 
+interface ServerRequest extends FastifyRequest {
+  timerStart: bigint;
+}
+
 const server = fastify();
+
+server.decorateRequest('timerStart', '');
 
 server.setErrorHandler((error: FastifyError, _request: FastifyRequest, reply: FastifyReply): void => {
   const statusCode = error.statusCode || 500;
@@ -83,6 +89,28 @@ server.addHook('preHandler', function (_request, reply, done) {
   done();
 });
 
+server.addHook('onRequest', (request, _reply, done) => {
+  (request as ServerRequest).timerStart = process.hrtime.bigint();
+  done();
+});
+
+server.addHook('onSend', (request, reply, _payload, done) => {
+  const timerEnd = process.hrtime.bigint();
+  const timerStart = (request as ServerRequest).timerStart;
+  let duration = Number(timerEnd - timerStart) / 1000000; // ms
+  duration = Math.round((duration + Number.EPSILON) * 100) / 100;
+  reply.header('Server-Timing', `total;dur=${duration}`);
+  done();
+});
+
+server.addHook('onResponse', (request, reply, done) => {
+  if (isDev) {
+    const duration = Math.round((reply.getResponseTime() + Number.EPSILON) * 100) / 100;
+    console.debug(`${duration}ms\t${request.method}\t${request.url}`);
+  }
+  done();
+});
+
 server.get('/_ah/warmup', async (_request: FastifyRequest, reply: FastifyReply) => {
   // Handle warmup logic.
   // ...
@@ -99,6 +127,10 @@ server.get('/ping', async (_request: FastifyRequest, reply: FastifyReply) => {
   reply
     .header('Content-Type', 'application/json; charset=utf-8')
     .send({ success: true, env: process.env['NODE_ENV'] })
+});
+
+server.head('/ping', async (_request: FastifyRequest, reply: FastifyReply) => {
+  reply.status(200).send();
 });
 
 server.get('/', async (_request: FastifyRequest, reply: FastifyReply) => {

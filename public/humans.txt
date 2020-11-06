@@ -15,3 +15,5 @@
     Source Code: https://github.com/irkfap/kvaapagarrot.com
 
     Inquiries: devopsina@kvaapagarrot.com
+
+    Status: https://status.kvaapagarrot.com/
