@@ -15,6 +15,7 @@
     "deploy": "gcloud app deploy app.yaml --project kvaapagarrot --quiet",
     "gcp-build": "NODE_ENV=production rollup -c",
     "start": "node -r source-map-support/register dist/main",
+    "static": "tsc -p scripts && node scripts/dist/make-static-handlers",
     "watch": "NODE_ENV=development rollup -c -w"
   },
   "dependencies": {

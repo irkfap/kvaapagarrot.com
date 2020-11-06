@@ -14,7 +14,7 @@ import {
 const PORT = process.env['PORT'] || '3000';
 
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename)
+const __dirname = path.dirname(__filename);
 
 const STATIC_DIR = path.join(__dirname, '..', 'public');
 const TEMPLATE_DIR = path.join(__dirname, '..', 'templates');
