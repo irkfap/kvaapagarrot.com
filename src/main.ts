@@ -1,10 +1,14 @@
 import * as path from 'path';
 import {fileURLToPath} from 'url';
-import fastify, {FastifyReply, FastifyRequest} from 'fastify';
-import {FastifyError, ValidationResult} from 'fastify-error';
+import fastify from 'fastify';
+import {FastifyError} from 'fastify-error';
 import fastifyStatic from 'fastify-static';
 import pointOfView from 'point-of-view';
 import * as eta from 'eta';
+import {
+  symbolTimerStart,
+  ErrorPayload
+} from './types';
 
 const PORT = process.env['PORT'] || '3000';
 
@@ -13,27 +17,11 @@ const __dirname = path.dirname(__filename)
 
 const isDev = process.env['NODE_ENV'] === 'development';
 
-interface ErrorPayload {
-  statusCode: number,
-  message: string,
-  error?: string,
-  stack?: string,
-  validation?: ValidationResult[],
-}
-
-const symbolTimerStart = Symbol('timerStart');
-
-declare module 'fastify' {
-  interface FastifyRequest {
-    [symbolTimerStart]: bigint;
-  }
-}
-
 const server = fastify();
 
 server.decorateRequest(symbolTimerStart, null);
 
-server.setErrorHandler((error: FastifyError, _request: FastifyRequest, reply: FastifyReply): void => {
+server.setErrorHandler((error: FastifyError, _request, reply): void => {
   const statusCode = error.statusCode || 500;
 
   // Log error
@@ -57,7 +45,7 @@ server.setErrorHandler((error: FastifyError, _request: FastifyRequest, reply: Fa
   reply.status(statusCode).send(payload);
 });
 
-server.setNotFoundHandler((request: FastifyRequest, reply: FastifyReply) => {
+server.setNotFoundHandler((request, reply) => {
   reply.status(404).send({
     url: request.url,
     method: request.method,
@@ -110,12 +98,12 @@ server.addHook('onSend', (request, reply, _payload, done) => {
 server.addHook('onResponse', (request, reply, done) => {
   if (isDev) {
     const duration = Math.round((reply.getResponseTime() + Number.EPSILON) * 1e3) / 1e3;
-    console.debug(`${duration}ms\t${request.method}\t${request.url}`);
+    console.debug(`${duration}ms\t${request.method} ${request.url}`);
   }
   done();
 });
 
-server.get('/_ah/warmup', async (_request: FastifyRequest, reply: FastifyReply) => {
+server.get('/_ah/warmup', async (_request, reply) => {
   // Handle warmup logic.
   // ...
 
@@ -124,7 +112,7 @@ server.get('/_ah/warmup', async (_request: FastifyRequest, reply: FastifyReply) 
     .send({ success: true })
 });
 
-server.get('/ping', async (_request: FastifyRequest, reply: FastifyReply) => {
+server.get('/ping', async (_request, reply) => {
   if (!isDev) {
     reply.header('Strict-Transport-Security', 'max-age=63072000; includeSubDomains; preload');
   }
@@ -133,11 +121,11 @@ server.get('/ping', async (_request: FastifyRequest, reply: FastifyReply) => {
     .send({ success: true, env: process.env['NODE_ENV'] })
 });
 
-server.head('/ping', async (_request: FastifyRequest, reply: FastifyReply) => {
+server.head('/ping', async (_request, reply) => {
   reply.status(200).send();
 });
 
-server.get('/', async (_request: FastifyRequest, reply: FastifyReply) => {
+server.get('/', async (_request, reply) => {
   if (!isDev) {
     reply.header('Strict-Transport-Security', 'max-age=63072000; includeSubDomains; preload');
   }
