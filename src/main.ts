@@ -1,5 +1,4 @@
-import * as path from 'path';
-import {fileURLToPath} from 'url';
+import {join as pathJoin} from 'path';
 import fastify from 'fastify';
 import {FastifyError} from 'fastify-error';
 import fastifyStatic from 'fastify-static';
@@ -12,14 +11,10 @@ import {
 } from './types';
 
 const PORT = process.env['PORT'] || '3000';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-const STATIC_DIR = path.join(__dirname, '..', 'public');
-const TEMPLATE_DIR = path.join(__dirname, '..', 'templates');
+const CWD = process.cwd();
+const STATIC_DIR = pathJoin(CWD, 'public');
+const TEMPLATE_DIR = pathJoin(CWD, 'templates');
 const TPL_EXTENSION = 'eta';
-
 const isDev = process.env['NODE_ENV'] === 'development';
 
 const server = fastify();
