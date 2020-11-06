@@ -125,12 +125,14 @@ server.get('/_ah/warmup', async (_request, reply) => {
 
     const templates = await glob(`**/*.${TPL_EXTENSION}`, {
       cwd: TEMPLATE_DIR,
+      filesOnly: true,
     });
 
-    const results = templates.map((async tpl => {
-      const res = await eta.renderFile(tpl, {});
-      console.info(`${res.length}\t${tpl}`);
-    }));
+    const results = templates.map(
+      tpl => eta.renderFile(tpl, {}).then(
+        (res: string) => console.info(`${res.length}\t${tpl}`)
+      )
+    );
 
     await Promise.all(results);
     console.info('Done.');
