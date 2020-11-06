@@ -15,6 +15,9 @@ const PORT = process.env['PORT'] || '3000';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename)
 
+const STATIC_DIR = path.join(__dirname, '..', 'public');
+const TEMPLATE_DIR = path.join(__dirname, '..', 'templates');
+
 const isDev = process.env['NODE_ENV'] === 'development';
 
 const server = fastify();
@@ -26,9 +29,11 @@ server.setErrorHandler((error: FastifyError, _request, reply): void => {
 
   // Log error
   if (statusCode >= 500) {
-    reply.log.error(error)
+    console.error(error);
+    // reply.log.error(error);
   } else if (statusCode >= 400) {
-    reply.log.info(error)
+    console.info(error);
+    // reply.log.info(error);
   }
 
   const payload: ErrorPayload = {
@@ -55,7 +60,7 @@ server.setNotFoundHandler((request, reply) => {
 });
 
 server.register(fastifyStatic, {
-  root: path.join(__dirname, '..', 'public'),
+  root: STATIC_DIR,
   prefix: '/',
   wildcard: false,
 });
@@ -63,6 +68,7 @@ server.register(fastifyStatic, {
 eta.configure({
   // Whether or not to cache templates if `name` or `filename` is passed
   cache: !isDev,
+  views: TEMPLATE_DIR,
   useWith: false,
 });
 
@@ -70,7 +76,7 @@ server.register(pointOfView, {
   engine: {
     eta
   },
-  root: path.join(__dirname, '..', 'templates'),
+  root: TEMPLATE_DIR,
   viewExt: 'eta',
 });
 
