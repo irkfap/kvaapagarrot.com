@@ -13,6 +13,8 @@ automatic_scaling:
   min_pending_latency: 500ms
   max_pending_latency: 2500ms
 
+entrypoint: node -r source-map-support/register dist/main
+
 env_variables:
   NODE_ENV: production
 
