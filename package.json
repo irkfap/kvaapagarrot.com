@@ -23,6 +23,7 @@
     "fastify-static": "^3.3.0",
     "point-of-view": "^4.6.0",
     "source-map-support": "^0.5.19",
+    "tiny-glob": "^0.2.6",
     "tslib": "^2.0.3"
   },
   "devDependencies": {
