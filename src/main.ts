@@ -22,8 +22,11 @@ interface ErrorPayload {
 }
 
 const symbolTimerStart = Symbol('timerStart');
-interface ServerRequest extends FastifyRequest {
-  symbolTimerStart: bigint;
+
+declare module 'fastify' {
+  interface FastifyRequest {
+    [symbolTimerStart]: bigint;
+  }
 }
 
 const server = fastify();
@@ -91,13 +94,13 @@ server.addHook('preHandler', function (_request, reply, done) {
 });
 
 server.addHook('onRequest', (request, _reply, done) => {
-  (request as ServerRequest).symbolTimerStart = process.hrtime.bigint();
+  request[symbolTimerStart] = process.hrtime.bigint();
   done();
 });
 
 server.addHook('onSend', (request, reply, _payload, done) => {
   const timerEnd = process.hrtime.bigint();
-  const timerStart = (request as ServerRequest).symbolTimerStart;
+  const timerStart = request[symbolTimerStart];
   let duration = Number(timerEnd - timerStart) / 1e6; // ms
   duration = Math.round((duration + Number.EPSILON) * 1e3) / 1e3;
   reply.header('Server-Timing', `render;dur=${duration}`);
