@@ -1,5 +1,5 @@
 import {join as pathJoin, basename, extname} from 'path';
-import { promises as fs } from 'fs';
+import {promises as fs} from 'fs';
 import glob from 'fast-glob';
 import {Options} from 'fast-glob/out/settings';
 import yaml from 'js-yaml';
@@ -19,49 +19,45 @@ import yaml from 'js-yaml';
  */
 
 interface RouteType {
-  url: string,
-  secure?: string,
-  redirect_http_response_code?: number,
+  url: string;
+  secure?: string;
+  redirect_http_response_code?: number;
 }
 
 interface StaticRouteType extends RouteType {
-  static_files: string,
-  upload: string,
-  mime_type?: string,
-  expiration?: string,
-  http_headers?: { [key: string]: string  },
+  static_files: string;
+  upload: string;
+  mime_type?: string;
+  expiration?: string;
+  http_headers?: {[key: string]: string};
 }
 interface DynamicRouteType extends RouteType {
-  script?: 'auto',
+  script?: 'auto';
 }
 
-const backendRoute: DynamicRouteType =  {
+const backendRoute: DynamicRouteType = {
   url: '/.*',
   secure: 'always',
   redirect_http_response_code: 301,
   script: 'auto',
-}
+};
 
 const STATIC_DIR = pathJoin(process.cwd(), 'public');
 const ROUTE_CONFIG = pathJoin(process.cwd(), 'routes.yaml');
 
-type RouteFlagsType = { [key: string]: string | {[key:string]: string} };
+type RouteFlagsType = {[key: string]: string | {[key: string]: string}};
 const ROUTE_FLAGS: RouteFlagsType = {
-  'site.webmanifest' : {mime_type: 'application/json', expiration: '10m'},
-  '*.ico' : 'image/x-icon',
+  'site.webmanifest': {mime_type: 'application/json', expiration: '10m'},
+  '*.ico': 'image/x-icon',
   'robots.txt': {expiration: '1s'},
   'sitemap.xml': {expiration: '1s'},
-  '*.eot' : 'application/vnd.ms-fontobject',
-  '*.ttf' : 'font/ttf',
-  '*.woff' : 'font/woff',
-  '*.woff2' : 'font/woff2',
+  '*.eot': 'application/vnd.ms-fontobject',
+  '*.ttf': 'font/ttf',
+  '*.woff': 'font/woff',
+  '*.woff2': 'font/woff2',
 };
 
-const IGNORE_FILES = [
-  '**/.DS_Store',
-  '**/LICENSE.txt',
-  '**/config.json'
-];
+const IGNORE_FILES = ['**/.DS_Store', '**/LICENSE.txt', '**/config.json'];
 
 const GLOB_OPTIONS: Options = {
   braceExpansion: false,
@@ -73,7 +69,7 @@ const GLOB_OPTIONS: Options = {
   onlyFiles: true,
 };
 
-const createRoute = (relPath: string, expand? : boolean): StaticRouteType => {
+const createRoute = (relPath: string, expand?: boolean): StaticRouteType => {
   let routeFlags = {};
   if (expand) {
     const extGlob = `*${extname(relPath)}`;
@@ -95,24 +91,20 @@ const createRoute = (relPath: string, expand? : boolean): StaticRouteType => {
   };
 };
 
-(async () => {
+void (async () => {
   let routes: RouteType[] = [];
 
   // const pattern = '**/('+Object.keys(ROUTE_FLAGS).join('|')+')';
-  const pattern = Object.keys(ROUTE_FLAGS).map(k => `**/${k}`);
+  const pattern = Object.keys(ROUTE_FLAGS).map((k) => `**/${k}`);
 
-  const filesKnown = await glob(pattern , GLOB_OPTIONS);
-  routes = routes.concat(
-      filesKnown.map(path => createRoute(path, true))
-  );
+  const filesKnown = await glob(pattern, GLOB_OPTIONS);
+  routes = routes.concat(filesKnown.map((path) => createRoute(path, true)));
 
-  const filesAll = await glob('**/*.*' , {
+  const filesAll = await glob('**/*.*', {
     ...GLOB_OPTIONS,
     ignore: IGNORE_FILES.concat(pattern),
   });
-  routes = routes.concat(
-    filesAll.map(path => createRoute(path))
-  );
+  routes = routes.concat(filesAll.map((path) => createRoute(path)));
 
   routes.push(backendRoute);
 

@@ -5,10 +5,7 @@ import fastifyStatic from 'fastify-static';
 import pointOfView from 'point-of-view';
 import * as eta from 'eta';
 import glob from 'fast-glob';
-import {
-  symbolTimerStart,
-  ErrorPayload
-} from './types';
+import {symbolTimerStart, ErrorPayload} from './types';
 
 const PORT = process.env['PORT'] || '3000';
 const CWD = process.cwd();
@@ -35,7 +32,7 @@ server.setErrorHandler((error: FastifyError, _request, reply): void => {
 
   const payload: ErrorPayload = {
     statusCode,
-    message : error.message,
+    message: error.message,
   };
 
   if (isDev) {
@@ -44,19 +41,19 @@ server.setErrorHandler((error: FastifyError, _request, reply): void => {
   }
 
   // Send error response
-  reply.status(statusCode).send(payload);
+  void reply.status(statusCode).send(payload);
 });
 
-server.setNotFoundHandler((request, reply) => {
-  reply.status(404).send({
+server.setNotFoundHandler((request, reply): void => {
+  void reply.status(404).send({
     url: request.url,
     method: request.method,
-    error: "Not Found",
+    error: 'Not Found',
     statusCode: 404,
   });
 });
 
-server.register(fastifyStatic, {
+void server.register(fastifyStatic, {
   root: STATIC_DIR,
   prefix: '/',
   wildcard: false,
@@ -69,9 +66,9 @@ eta.configure({
   useWith: false,
 });
 
-server.register(pointOfView, {
+void server.register(pointOfView, {
   engine: {
-    eta
+    eta,
   },
   root: TEMPLATE_DIR,
   viewExt: TPL_EXTENSION,
@@ -94,13 +91,14 @@ server.addHook('onSend', (request, reply, _payload, done) => {
   const timerStart = request[symbolTimerStart];
   let duration = Number(timerEnd - timerStart) / 1e6; // ms
   duration = Math.round((duration + Number.EPSILON) * 1e3) / 1e3;
-  reply.header('Server-Timing', `render;dur=${duration}`);
+  void reply.header('Server-Timing', `render;dur=${duration}`);
   done();
 });
 
 server.addHook('onResponse', (request, reply, done) => {
   if (isDev) {
-    const duration = Math.round((reply.getResponseTime() + Number.EPSILON) * 1e3) / 1e3;
+    const duration =
+      Math.round((reply.getResponseTime() + Number.EPSILON) * 1e3) / 1e3;
     console.debug(`${duration}ms\t${request.method} ${request.url}`);
   }
   done();
@@ -127,44 +125,48 @@ server.get('/_ah/warmup', async (_request, reply) => {
       onlyFiles: true,
     });
 
-    const results = templates.map(
-      tpl => eta.renderFile(tpl, {}).then(
-        (res: string) => console.info(`${res.length}\t${tpl}`)
-      )
-    );
+    for (const tpl of templates) {
+      const rendered = (await eta.renderFile(tpl, {})) as string;
+      console.info(`${rendered.length}\t${tpl}`);
+    }
 
-    await Promise.all(results);
     console.info('Done.');
   }
 
-  reply
+  void reply
     .header('Content-Type', 'application/json; charset=utf-8')
-    .send({ success: true })
+    .send({success: true});
 });
 
 server.get('/ping', async (_request, reply) => {
   if (!isDev) {
-    reply.header('Strict-Transport-Security', 'max-age=63072000; includeSubDomains; preload');
+    void reply.header(
+      'Strict-Transport-Security',
+      'max-age=63072000; includeSubDomains; preload',
+    );
   }
-  reply
+  void reply
     .header('Content-Type', 'application/json; charset=utf-8')
-    .send({ success: true, env: process.env['NODE_ENV'] })
+    .send({success: true, env: process.env['NODE_ENV']});
 });
 
 server.head('/ping', async (_request, reply) => {
-  reply.status(200).send();
+  void reply.status(200).send();
 });
 
 server.get('/', async (_request, reply) => {
   if (!isDev) {
-    reply.header('Strict-Transport-Security', 'max-age=63072000; includeSubDomains; preload');
+    void reply.header(
+      'Strict-Transport-Security',
+      'max-age=63072000; includeSubDomains; preload',
+    );
   }
 
-  reply.view('index', {});
+  void reply.view('index', {});
 });
 
 server.listen(PORT, (err, address) => {
-  if(err) {
+  if (err) {
     console.error(err);
     process.exit(1);
   }
