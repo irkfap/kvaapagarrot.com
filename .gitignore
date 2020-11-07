@@ -4,6 +4,9 @@ dist/
 
 *.log
 
+# GAE
+routes.yaml
+
 # Jetbrains
 .idea/**
 .ijwb/**

@@ -1,4 +1,5 @@
 import {join as pathJoin, basename, extname} from 'path';
+import { promises as fs } from 'fs';
 import glob from 'fast-glob';
 import {Options} from 'fast-glob/out/settings';
 import yaml from 'js-yaml';
@@ -8,17 +9,41 @@ import yaml from 'js-yaml';
  *
  * https://cloud.google.com/appengine/docs/standard/nodejs/serving-static-files#configuring_your_static_file_handlers
  * https://cloud.google.com/appengine/docs/standard/nodejs/config/appref#handlers_element
+ *
+ * Script will get all files from the `public` directory and will create proper `routes.yaml` definition for them.
+ * Launch:
+ *  $ tsc -p scripts && node -r source-map-support/register scripts/dist/make-static-handlers
+ *
+ * In the end will be added single dynamic route for NodeJS standard environment.
+ *
  */
+
 interface RouteType {
   url: string,
+  secure?: string,
+  redirect_http_response_code?: number,
+}
+
+interface StaticRouteType extends RouteType {
   static_files: string,
   upload: string,
   mime_type?: string,
   expiration?: string,
   http_headers?: { [key: string]: string  },
 }
+interface DynamicRouteType extends RouteType {
+  script?: 'auto',
+}
+
+const backendRoute: DynamicRouteType =  {
+  url: '/.*',
+  secure: 'always',
+  redirect_http_response_code: 301,
+  script: 'auto',
+}
 
 const STATIC_DIR = pathJoin(process.cwd(), 'public');
+const ROUTE_CONFIG = pathJoin(process.cwd(), 'routes.yaml');
 
 type RouteFlagsType = { [key: string]: string | {[key:string]: string} };
 const ROUTE_FLAGS: RouteFlagsType = {
@@ -48,7 +73,7 @@ const GLOB_OPTIONS: Options = {
   onlyFiles: true,
 };
 
-const createRoute = (relPath: string, expand? : boolean): RouteType => {
+const createRoute = (relPath: string, expand? : boolean): StaticRouteType => {
   let routeFlags = {};
   if (expand) {
     const extGlob = `*${extname(relPath)}`;
@@ -64,6 +89,8 @@ const createRoute = (relPath: string, expand? : boolean): RouteType => {
     url: `/${relPath}`,
     static_files: `public/${relPath}`,
     upload: `public/${relPath}`,
+    secure: 'always',
+    redirect_http_response_code: 301,
     ...routeFlags,
   };
 };
@@ -87,7 +114,10 @@ const createRoute = (relPath: string, expand? : boolean): RouteType => {
     filesAll.map(path => createRoute(path))
   );
 
-  const routesYaml = yaml.safeDump({handlers: routes}, {skipInvalid: true});
+  routes.push(backendRoute);
 
-  console.log(routesYaml);
+  const routesYaml = yaml.safeDump({handlers: routes}, {skipInvalid: true});
+  await fs.writeFile(ROUTE_CONFIG, routesYaml);
+
+  console.log('Done');
 })();
