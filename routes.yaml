@@ -9,60 +9,44 @@ handlers:
     static_files: public/\1
     upload: public/(robots|humans)\.txt$
     expiration: "1s"
-    http_headers:
-      Access-Control-Allow-Origin: "*"
 
   - url: /site\.webmanifest
     mime_type: application/json
     static_files: public/site.webmanifest
     upload: public/site\.webmanifest
     expiration: "10m"
-    http_headers:
-      Access-Control-Allow-Origin: "*"
 
   # Web fonts
   - url: /(.*\.eot)$
     mime_type: application/vnd.ms-fontobject
     static_files: public/\1
     upload: public/.*\.eot$
-    http_headers:
-      Access-Control-Allow-Origin: "*"
 
   - url: /(.*\.ttf)$
     mime_type: font/ttf
     static_files: public/\1
     upload: public/.*\.ttf$
-    http_headers:
-      Access-Control-Allow-Origin: "*"
 
   - url: /(.*\.woff)$
     mime_type: font/woff
     static_files: public/\1
     upload: public/.*\.woff$
-    http_headers:
-      Access-Control-Allow-Origin: "*"
 
   - url: /(.*\.woff2)$
     mime_type: font/woff2
     static_files: public/\1
     upload: public/.*\.woff2$
-    http_headers:
-      Access-Control-Allow-Origin: "*"
 
   # Image files
   - url: /(.*\.(png|svg|webp|jpg|jpeg|gif|apng|mp4))$
     static_files: public/\1
     upload: public/.*\.(png|svg|webp|jpg|jpeg|gif|apng|mp4)$
-    http_headers:
-      Access-Control-Allow-Origin: "*"
 
   # Other static files
   - url: /(.*\.(html|css|js|map|xml))$
     static_files: public/\1
     upload: public/.*\.(html|css|js|map|xml)$
     expiration: "10m"
-    http_headers:
-      Access-Control-Allow-Origin: "*"
 
   - url: /.*
     secure: always
