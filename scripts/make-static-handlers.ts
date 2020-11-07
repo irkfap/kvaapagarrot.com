@@ -1,13 +1,21 @@
 import {join as pathJoin, basename, extname} from 'path';
 import glob from 'fast-glob';
 import {Options} from 'fast-glob/out/settings';
+import yaml from 'js-yaml';
 
+/**
+ * App Engine static route definition
+ *
+ * https://cloud.google.com/appengine/docs/standard/nodejs/serving-static-files#configuring_your_static_file_handlers
+ * https://cloud.google.com/appengine/docs/standard/nodejs/config/appref#handlers_element
+ */
 interface RouteType {
   url: string,
   static_files: string,
   upload: string,
   mime_type?: string,
   expiration?: string,
+  http_headers?: { [key: string]: string  },
 }
 
 const STATIC_DIR = pathJoin(process.cwd(), 'public');
@@ -79,5 +87,7 @@ const createRoute = (relPath: string, expand? : boolean): RouteType => {
     filesAll.map(path => createRoute(path))
   );
 
-  console.log(routes);
+  const routesYaml = yaml.safeDump({handlers: routes}, {skipInvalid: true});
+
+  console.log(routesYaml);
 })();
