@@ -55,6 +55,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Generate static route handlers
+        run: |
+          yarn install
+          yarn static
+
       - name: Import Service Account key
         run: echo "${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}" | base64 -d > /tmp/auth.json
 
