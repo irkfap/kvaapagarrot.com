@@ -6,6 +6,10 @@
 
 lighthouserc.json
 sonar-project.properties
+.hound.yml
+
+.eslintrc
+.prettierrc.json
 
 .gcloudignore
 .git
