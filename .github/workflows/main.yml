@@ -51,7 +51,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Generate static route handlers
+      - name: Run linter
         run: |
           yarn install
           yarn lint
