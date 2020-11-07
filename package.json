@@ -14,7 +14,7 @@
     "build-frontend": "",
     "deploy": "gcloud app deploy app.yaml --project kvaapagarrot --quiet",
     "gcp-build": "NODE_ENV=production rollup -c",
-    "lint": "eslint '**/*.ts'",
+    "lint": "eslint '**/*.ts' --fix",
     "start": "node -r source-map-support/register dist/main",
     "static": "tsc -p scripts && node -r source-map-support/register scripts/dist/make-static-handlers",
     "watch": "NODE_ENV=development rollup -c -w"
