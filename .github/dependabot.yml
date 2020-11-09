@@ -8,8 +8,9 @@ updates:
     open-pull-requests-limit: 20
     commit-message:
       prefix: "chore(deps):"
-    labels:
-      - "dependabot"
+    versioning-strategy: increase
+    reviewers:
+      - siberex
 
   - package-ecosystem: github-actions
     directory: "/"
@@ -19,5 +20,5 @@ updates:
       time: "06:00"
     commit-message:
       prefix: "chore(deps):"
-    labels:
-      - "dependabot"
+    reviewers:
+      - siberex
