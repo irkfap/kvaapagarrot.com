@@ -1,11 +1,12 @@
 import {join as pathJoin} from 'path';
-import fastify from 'fastify';
+import fastify, {FastifyReply, FastifyRequest} from 'fastify';
 import {FastifyError} from 'fastify-error';
 import fastifyStatic from 'fastify-static';
 import pointOfView from 'point-of-view';
 import * as eta from 'eta';
 import glob from 'fast-glob';
 import {symbolTimerStart, ErrorPayload} from './types';
+import {getUserCountry, getUserIp} from './helpers';
 
 const PORT = process.env['PORT'] || '3000';
 const CWD = process.cwd();
@@ -44,14 +45,16 @@ server.setErrorHandler((error: FastifyError, _request, reply): void => {
   void reply.status(statusCode).send(payload);
 });
 
-server.setNotFoundHandler((request, reply): void => {
-  void reply.status(404).send({
-    url: request.url,
-    method: request.method,
-    error: 'Not Found',
-    statusCode: 404,
-  });
-});
+server.setNotFoundHandler(
+  (request: FastifyRequest, reply: FastifyReply): void => {
+    void reply.status(404).send({
+      url: request.url,
+      method: request.method,
+      error: 'Not Found',
+      statusCode: 404,
+    });
+  },
+);
 
 void server.register(fastifyStatic, {
   root: STATIC_DIR,
@@ -95,14 +98,17 @@ server.addHook('onSend', (request, reply, _payload, done) => {
   done();
 });
 
-server.addHook('onResponse', (request, reply, done) => {
-  if (isDev) {
-    const duration =
-      Math.round((reply.getResponseTime() + Number.EPSILON) * 1e3) / 1e3;
-    console.debug(`${duration}ms\t${request.method} ${request.url}`);
-  }
-  done();
-});
+server.addHook(
+  'onResponse',
+  (request: FastifyRequest, reply: FastifyReply, done) => {
+    if (isDev) {
+      const duration =
+        Math.round((reply.getResponseTime() + Number.EPSILON) * 1e3) / 1e3;
+      console.debug(`${duration}ms\t${request.method} ${request.url}`);
+    }
+    done();
+  },
+);
 
 /**
  * https://cloud.google.com/appengine/docs/standard/nodejs/how-instances-are-managed#warmup_requests
@@ -138,20 +144,30 @@ server.get('/_ah/warmup', async (_request, reply) => {
     .send({success: true});
 });
 
-server.get('/ping', async (_request, reply) => {
+server.get('/ping', async (request: FastifyRequest, reply: FastifyReply) => {
   if (!isDev) {
     void reply.header(
       'Strict-Transport-Security',
       'max-age=63072000; includeSubDomains; preload',
     );
   }
-  void reply
-    .header('Content-Type', 'application/json; charset=utf-8')
-    .send({success: true, env: process.env['NODE_ENV']});
+
+  void reply.header('Content-Type', 'application/json; charset=utf-8').send({
+    success: true,
+    env: process.env['NODE_ENV'],
+    user: {
+      ip: getUserIp(request),
+      country: getUserCountry(request),
+    },
+  });
 });
 
-server.head('/ping', async (_request, reply) => {
-  void reply.status(200).send();
+server.head('/ping', async (request, reply) => {
+  void reply
+    .header('X-User-Ip', getUserIp(request))
+    .header('X-User-Country', getUserCountry(request))
+    .status(200)
+    .send();
 });
 
 server.get('/', async (_request, reply) => {
