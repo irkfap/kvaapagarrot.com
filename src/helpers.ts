@@ -1,6 +1,8 @@
 import {FastifyRequest} from 'fastify';
 
-export const getUserIp = function (request: FastifyRequest): string | undefined {
+export const getUserIp = function (
+  request: FastifyRequest,
+): string | undefined {
   let ip: string | undefined;
 
   ip = request.headers['cf-connecting-ip'] as string;
@@ -21,7 +23,9 @@ export const getUserIp = function (request: FastifyRequest): string | undefined 
   return ip;
 };
 
-export const getUserCountry = function (request: FastifyRequest): string | undefined {
+export const getUserCountry = function (
+  request: FastifyRequest,
+): string | undefined {
   const country = request.headers['cf-ipcountry']
     ? (request.headers['cf-ipcountry'] as string)
     : (request.headers['x-appengine-country'] as string);
