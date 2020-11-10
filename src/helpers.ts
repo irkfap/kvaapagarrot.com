@@ -3,24 +3,16 @@ import {FastifyRequest} from 'fastify';
 export const getUserIp = function (
   request: FastifyRequest,
 ): string | undefined {
-  let ip: string | undefined;
+  const ip = request.headers['cf-connecting-ip'] as string;
+  if (ip) return ip;
 
-  ip = request.headers['cf-connecting-ip'] as string;
-
-  if (!ip) {
-    // "x-forwarded-for": "188.65.245.45, 169.254.1.1",
-    const ips = request.headers['x-forwarded-for'] as string;
-    if (ips) {
-      ips.split(',').map((v) => v.trim());
-      ip = ips.length ? ips[0] : '';
-    }
+  // "x-forwarded-for": "188.65.245.45, 169.254.1.1",
+  const ips = request.headers['x-forwarded-for'] as string;
+  if (ips) {
+    return ips.split(',').map((v) => v.trim())[0];
   }
 
-  if (!ip) {
-    ip = request.headers['x-appengine-user-ip'] as string;
-  }
-
-  return ip;
+  return request.headers['x-appengine-user-ip'] as string;
 };
 
 export const getUserCountry = function (
