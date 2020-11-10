@@ -164,8 +164,8 @@ server.get('/ping', async (request: FastifyRequest, reply: FastifyReply) => {
 
 server.head('/ping', async (request, reply) => {
   void reply
-    .header('X-User-Ip', getUserIp(request))
-    .header('X-User-Country', getUserCountry(request))
+    .header('X-Client-Ip', getUserIp(request))
+    .header('X-Client-Country', getUserCountry(request))
     .status(200)
     .send();
 });
