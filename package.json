@@ -22,7 +22,7 @@
   "dependencies": {
     "eta": "^1.11.0",
     "fast-glob": "^3.2.4",
-    "fastify": "^3.7.0",
+    "fastify": "^3.8.0",
     "fastify-static": "^3.3.0",
     "point-of-view": "^4.6.0",
     "source-map-support": "^0.5.19",
