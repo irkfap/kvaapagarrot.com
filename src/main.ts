@@ -182,25 +182,38 @@ server.get('/', async (_request, reply) => {
   void reply.view('index', {});
 });
 
-const redirectTrap = function(_request: FastifyRequest, reply: FastifyReply): void {
-  void reply.send({
-    trap: true,
-    url: getTrapped(),
-  });
-}
+const redirectTrap = function (
+  _request: FastifyRequest,
+  reply: FastifyReply,
+): void {
+  if (isDev) {
+    void reply.send({
+      url: getTrapped(),
+    });
+  } else {
+    void reply.redirect(302, getTrapped());
+  }
+};
 
-const createTrapRoutes = function() {
-  const routes = trapRoutes.split('\n').filter((v: string) => v && v[0] !== '#');
+const createTrapRoutes = function () {
+  let routes = trapRoutes.split('\n').filter((v: string) => v && v[0] !== '#');
 
-  routes.forEach(url => {
+  routes = routes.map((v: string) => v.replace('*', ':segment(.*)'));
+  // console.log(routes);
+
+  routes.forEach((url) => {
     server.route({
       method: ['GET', 'POST'],
       url,
       handler: redirectTrap,
-    })
+    });
   });
-}
+};
 createTrapRoutes();
+
+// server.ready(() => {
+//   console.log(server.printRoutes());
+// });
 
 server.listen(PORT, (err, address) => {
   if (err) {

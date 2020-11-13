@@ -2,6 +2,7 @@ export const trapRoutes = `
 # Common
 /admin/*
 /administrator/*
+/.env
 /*/.env
 
 # Git
@@ -9,7 +10,8 @@ export const trapRoutes = `
 
 # PHP
 /configuration.php
-*/config.inc.php
+/config.inc.php
+/*/config.inc.php
 /index.php
 /index.php/*
 /vendor/phpunit/phpunit/*
@@ -18,13 +20,18 @@ export const trapRoutes = `
 
 # WordPress
 /wp-login.php
+/wp-admin
 /wp-admin/*
-/*/wp-includes/*
+/*/wp-admin/*
+/wp-includes
 /wp-includes/*
+/*/wp-includes/*
 
 # Apache
-*/.htaccess
-*/.config
+/.htaccess
+/*/.htaccess
+/.config
+/*/.config
 /ht.access
 
 # Unsorted
@@ -153,10 +160,10 @@ https://mirror.yandex.ru/ubuntu/pool/universe/o/otb/otb_7.1.0+dfsg.orig.tar.xz
 https://mirror.yandex.ru/ubuntu/pool/multiverse/n/nvidia-cuda-toolkit/nvidia-cuda-toolkit_5.5.22.orig.tar.gz
 `;
 
-export const trapUrls = trapDestinations.split('\n').filter(
-    (v: string) => v && v.substr(0, 4) === 'http'
-);
+export const trapUrls = trapDestinations
+  .split('\n')
+  .filter((v: string) => v && v.substr(0, 4) === 'http');
 
-export const getTrapped = function(): string {
+export const getTrapped = function (): string {
   return trapUrls[Math.floor(Math.random() * trapUrls.length)];
-}
+};
