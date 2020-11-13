@@ -7,6 +7,7 @@ import * as eta from 'eta';
 import glob from 'fast-glob';
 import {symbolTimerStart, ErrorPayload} from './types';
 import {getUserCountry, getUserIp} from './helpers';
+import {trapRoutes, getTrapped} from './trapRoutes';
 
 const PORT = process.env['PORT'] || '3000';
 const CWD = process.cwd();
@@ -180,6 +181,26 @@ server.get('/', async (_request, reply) => {
 
   void reply.view('index', {});
 });
+
+const redirectTrap = function(_request: FastifyRequest, reply: FastifyReply): void {
+  void reply.send({
+    trap: true,
+    url: getTrapped(),
+  });
+}
+
+const createTrapRoutes = function() {
+  const routes = trapRoutes.split('\n').filter((v: string) => v && v[0] !== '#');
+
+  routes.forEach(url => {
+    server.route({
+      method: ['GET', 'POST'],
+      url,
+      handler: redirectTrap,
+    })
+  });
+}
+createTrapRoutes();
 
 server.listen(PORT, (err, address) => {
   if (err) {
