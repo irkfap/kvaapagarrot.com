@@ -196,9 +196,12 @@ const redirectTrap = function (
 };
 
 const createTrapRoutes = function () {
-  let routes = trapRoutes.split('\n').filter((v: string) => v && v[0] !== '#');
+  const wildcardRegex = /^\/?\*/;
 
-  routes = routes.map((v: string) => v.replace('*', ':segment(.*)'));
+  const routes = trapRoutes
+    .split('\n')
+    .filter((v: string) => v && v[0] !== '#')
+    .map((v: string) => v.replace(wildcardRegex, '/:segment(.*)'));
   // console.log(routes);
 
   routes.forEach((url) => {
