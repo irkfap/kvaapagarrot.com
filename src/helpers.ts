@@ -9,7 +9,7 @@ export const getUserIp = function (
   // "x-forwarded-for": "188.65.245.45, 169.254.1.1",
   const ips = request.headers['x-forwarded-for'] as string;
   if (ips) {
-    return ips.split(',').map((v) => v.trim())[0];
+    return ips.split(',')[0].trim();
   }
 
   return (
