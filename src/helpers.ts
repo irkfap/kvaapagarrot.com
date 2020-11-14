@@ -12,7 +12,10 @@ export const getUserIp = function (
     return ips.split(',').map((v) => v.trim())[0];
   }
 
-  return request.headers['x-appengine-user-ip'] as string;
+  return (
+    (request.headers['x-appengine-user-ip'] as string) ||
+    request.connection.remoteAddress
+  );
 };
 
 export const getUserCountry = function (
