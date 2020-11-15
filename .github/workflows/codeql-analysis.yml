@@ -24,6 +24,8 @@ on:
 jobs:
   analyze:
     name: Analyze
+    # Skip workflow entirely for [skip ci] commits
+    if: ${{ !contains(github.event.commits[0].message, '[skip ci]') && !contains(github.event.commits[0].message, '[no ci]') }}
     runs-on: ubuntu-latest
 
     strategy:

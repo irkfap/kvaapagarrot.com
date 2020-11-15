@@ -25,23 +25,6 @@ jobs:
         with:
           access_token: ${{ github.token }}
 
-  sonarcloud:
-    name: SonarCloud
-    # Skip workflow entirely for [skip ci] commits
-    if: ${{ !contains(github.event.commits[0].message, '[skip ci]') && !contains(github.event.commits[0].message, '[no ci]') }}
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          # Shallow clones should be disabled for a better relevancy of analysis
-          # 0 = all history for all branches and tags
-          fetch-depth: 0
-      - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-
   lint:
     name: ESLint
     # Skip workflow entirely for [skip ci] commits
