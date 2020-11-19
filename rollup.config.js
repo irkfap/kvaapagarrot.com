@@ -19,11 +19,11 @@ export default {
   external: [
     'path',
     'url',
+    'eta',
+    'fast-glob',
     'fastify',
     'fastify-static',
     'point-of-view',
-    'eta',
-    'tiny-glob',
   ],
 
   plugins: [
