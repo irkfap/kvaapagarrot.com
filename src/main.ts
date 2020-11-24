@@ -8,6 +8,7 @@ import glob from 'fast-glob';
 import {symbolTimerStart, ErrorPayload} from './types';
 import {getUserCountry, getUserIp} from './helpers';
 import {trapRoutes, getTrapped} from './trapRoutes';
+import {LRU} from "./lru";
 
 const PORT = process.env['PORT'] || '3000';
 const CWD = process.cwd();
