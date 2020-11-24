@@ -74,8 +74,7 @@ const templateOptions: EtaOptions = {
   views: TEMPLATE_DIR,
   // https://eta.js.org/docs/api/configuration
   useWith: false,
-  // @ts-ignore Reason: ETA cache implementation discrepancies:
-  // https://github.com/eta-dev/eta/blob/master/src/storage.ts
+  // @ts-ignore: Eta cache implementation discrepancies: https://github.com/eta-dev/eta/blob/master/src/storage.ts
   templates: lru,
 };
 

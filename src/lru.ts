@@ -9,7 +9,7 @@ export class LRU {
     // https://yomguithereal.github.io/posts/lru-cache
     this.cache = new LRUCache(
       String,
-      // @ts-ignore: No need to align types here
+      // @ts-ignore: No need to align types here.
       (Function as TemplateFunction) as IArrayLikeConstructor,
       capacity,
     );
@@ -31,7 +31,7 @@ export class LRU {
 
   remove(key: string): void {
     // https://github.com/Yomguithereal/mnemonist/issues/143
-    // @ts-ignore Reason: ETA cache declares this for some reason (never called in the code actually).
+    // @ts-ignore: Eta cache declares this for some reason (never called in the code actually).
     this.cache.set(key, undefined);
   }
 
