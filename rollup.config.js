@@ -23,6 +23,7 @@ export default {
     'fast-glob',
     'fastify',
     'fastify-static',
+    'mnemonist/lru-cache.js',
     'point-of-view',
   ],
 

@@ -24,7 +24,8 @@
     "fast-glob": "^3.2.4",
     "fastify": "^3.8.0",
     "fastify-static": "^3.3.0",
-    "point-of-view": "^4.6.0",
+    "mnemonist": "^0.38.0",
+    "point-of-view": "siberex/point-of-view",
     "source-map-support": "^0.5.19",
     "tslib": "^2.0.3"
   },
