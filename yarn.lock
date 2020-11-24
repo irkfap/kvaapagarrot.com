@@ -810,13 +810,6 @@ fastify-error@^0.2.0:
   resolved "https://registry.yarnpkg.com/fastify-error/-/fastify-error-0.2.0.tgz#9a1c28d4f42b6259e7a549671c8e5e2d85660634"
   integrity sha512-zabxsBatj59ROG0fhP36zNdc5Q1/eYeH9oSF9uvfrurZf8/JKfrJbMcIGrLpLWcf89rS6L91RHWm20A/X85hcA==
 
-fastify-plugin@^2.0.0:
-  version "2.3.4"
-  resolved "https://registry.yarnpkg.com/fastify-plugin/-/fastify-plugin-2.3.4.tgz#b17abdc36a97877d88101fb86ad8a07f2c07de87"
-  integrity sha512-I+Oaj6p9oiRozbam30sh39BiuiqBda7yK2nmSPVwDCfIBlKnT8YB3MY+pRQc2Fcd07bf6KPGklHJaQ2Qu81TYQ==
-  dependencies:
-    semver "^7.3.2"
-
 fastify-plugin@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/fastify-plugin/-/fastify-plugin-3.0.0.tgz#cf1b8c8098e3b5a7c8c30e6aeb06903370c054ca"
@@ -1503,12 +1496,11 @@ pkg-dir@^2.0.0:
   dependencies:
     find-up "^2.1.0"
 
-point-of-view@^4.6.0:
+point-of-view@siberex/point-of-view:
   version "4.6.0"
-  resolved "https://registry.yarnpkg.com/point-of-view/-/point-of-view-4.6.0.tgz#4a170fa288a60b452b9df187494165216484b52d"
-  integrity sha512-Wt61sQLhJKvtLFTqYoL+jKUjaBP0lBG94cO16+OTkuv4fq5eA3AqvgsCVd5osWBtbbxqgnPePOqWp8VyoZFGjw==
+  resolved "https://codeload.github.com/siberex/point-of-view/tar.gz/6a0a731d4bb50c5b3fca16698ab8c6c90aba4300"
   dependencies:
-    fastify-plugin "^2.0.0"
+    fastify-plugin "^3.0.0"
     hashlru "^2.3.0"
 
 prelude-ls@^1.2.1:
