@@ -4,6 +4,7 @@ import {FastifyError} from 'fastify-error';
 import fastifyStatic from 'fastify-static';
 import pointOfView from 'point-of-view';
 import * as eta from 'eta';
+import {PartialConfig as EtaOptions} from 'eta/dist/types/config';
 import glob from 'fast-glob';
 import {symbolTimerStart, ErrorPayload} from './types';
 import {getUserCountry, getUserIp} from './helpers';
@@ -64,18 +65,33 @@ void server.register(fastifyStatic, {
   wildcard: false,
 });
 
-eta.configure({
+// Define cache for templates
+const lru = new LRU(1000);
+
+const templateOptions: EtaOptions = {
   // Whether or not to cache templates if `name` or `filename` is passed
   cache: !isDev,
   views: TEMPLATE_DIR,
+  // https://eta.js.org/docs/api/configuration
   useWith: false,
-});
+  // @ts-ignore Reason: ETA cache implementation discrepancies:
+  // https://github.com/eta-dev/eta/blob/master/src/storage.ts
+  templates: lru,
+};
+
+eta.configure(templateOptions);
 
 void server.register(pointOfView, {
   engine: {
     eta,
   },
+  // NB: For ETA engine, point-of-view recreates ETA config on each view() call:
+  // https://github.com/siberex/point-of-view/blob/6a0a731d4bb50c5b3fca16698ab8c6c90aba4300/index.js#L531
+  // So, it is important to pass here `templateOptions` with `templates` attr defined above
+  // (for cache to work with our instance and not the default one).
+  options: templateOptions,
   root: TEMPLATE_DIR,
+  production: !isDev,
   viewExt: TPL_EXTENSION,
 });
 
@@ -133,12 +149,27 @@ server.get('/_ah/warmup', async (_request, reply) => {
       onlyFiles: true,
     });
 
-    for (const tpl of templates) {
-      const rendered = (await eta.renderFile(tpl, {})) as string;
-      console.info(`${rendered.length}\t${tpl}`);
-    }
+    for (const filename of templates) {
+      let res = false;
+      try {
+        const tplPath = pathJoin(TEMPLATE_DIR, filename);
+        // NB: eta.config.templates === lru
+        res = eta.config.templates.get(tplPath) !== undefined;
 
-    console.info('Done.');
+        if (!res) {
+          eta.loadFile(tplPath, {
+            // NB: Absolute path is used as a cache key:
+            // https://github.com/eta-dev/eta/blob/47f8b0f/src/file-handlers.ts#L49
+            // https://github.com/eta-dev/eta/blob/47f8b0f/src/file-handlers.ts#L72
+            filename: tplPath,
+          });
+          res = eta.config.templates.get(tplPath) !== undefined;
+        }
+      } catch (err) {
+        // do nothing
+      }
+      console.info(`[${res ? '✓' : '×'}] ${filename}`);
+    }
   }
 
   void reply
