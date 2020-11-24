@@ -3,12 +3,16 @@ import {IArrayLikeConstructor} from 'mnemonist/utils/types';
 import {TemplateFunction} from 'eta/dist/types/compile';
 
 export class LRU {
-  public cache: LRUCache<string, TemplateFunction>
+  private cache: LRUCache<string, TemplateFunction>;
 
-  constructor(capacity: number = 1000) {
+  constructor(capacity = 1000) {
     // https://yomguithereal.github.io/posts/lru-cache
-    // @ts-ignore Reason: no need to align types here
-    this.cache = new LRUCache(String, Function as TemplateFunction as IArrayLikeConstructor, capacity);
+    this.cache = new LRUCache(
+      String,
+      // @ts-ignore: No need to align types here
+      (Function as TemplateFunction) as IArrayLikeConstructor,
+      capacity,
+    );
   }
 
   get(key: string): TemplateFunction | undefined {
@@ -38,5 +42,7 @@ export class LRU {
   // Comes from ETA cache implementation (Cacher<TemplateFunction>)
   // In `Cacher` it duplicates cache instance from another instance.
   // Not going to re-implement that here.
-  load(): void {}
+  load(): void {
+    return void null;
+  }
 }
