@@ -235,13 +235,13 @@ const createTrapRoutes = function () {
     .map((v: string) => v.replace(wildcardRegex, '/:segment(.*)'));
   // console.log(routes);
 
-  routes.forEach((url) => {
+  for (const url of routes) {
     server.route({
       method: ['GET', 'POST'],
       url,
       handler: redirectTrap,
     });
-  });
+  }
 };
 createTrapRoutes();
 

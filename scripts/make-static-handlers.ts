@@ -92,24 +92,39 @@ const createRoute = (relPath: string, expand?: boolean): StaticRouteType => {
 };
 
 void (async () => {
-  let routes: RouteType[] = [];
+  const routes: RouteType[] = [];
+  console.info('📌 Creating static routes...');
 
   // const pattern = '**/('+Object.keys(ROUTE_FLAGS).join('|')+')';
   const pattern = Object.keys(ROUTE_FLAGS).map((k) => `**/${k}`);
 
   const filesKnown = await glob(pattern, GLOB_OPTIONS);
-  routes = routes.concat(filesKnown.map((path) => createRoute(path, true)));
+
+  for (const path of filesKnown) {
+    routes.push(createRoute(path, true));
+    console.info(path);
+  }
 
   const filesAll = await glob('**/*.*', {
     ...GLOB_OPTIONS,
     ignore: IGNORE_FILES.concat(pattern),
   });
-  routes = routes.concat(filesAll.map((path) => createRoute(path)));
 
+  for (const path of filesAll) {
+    routes.push(createRoute(path));
+    console.info(path);
+  }
+
+  // Dynamic (script) route goes last
   routes.push(backendRoute);
 
   const routesYaml = yaml.safeDump({handlers: routes}, {skipInvalid: true});
-  await fs.writeFile(ROUTE_CONFIG, routesYaml);
-
-  console.log('Done');
+  await fs
+    .writeFile(ROUTE_CONFIG, routesYaml)
+    .then(() => {
+      console.info(`✅ Success: ${ROUTE_CONFIG} saved.`);
+    })
+    .catch((err) => {
+      console.error(err);
+    });
 })();
