@@ -17,6 +17,8 @@ entrypoint: node -r source-map-support/register dist/main
 
 env_variables:
   NODE_ENV: production
+  # Discard Nodejs 12 stderr pollution: "ExperimentalWarning: The ESM module loader is experimental."
+  NODE_NO_WARNINGS: 1
 
 inbound_services:
   - warmup
