@@ -1498,8 +1498,8 @@ pkg-dir@^2.0.0:
 
 point-of-view@siberex/point-of-view:
   version "4.6.0"
-  uid "1f438195ddc138b213d1af18c5eb743dffe9c3e3"
-  resolved "https://codeload.github.com/siberex/point-of-view/tar.gz/1f438195ddc138b213d1af18c5eb743dffe9c3e3"
+  uid f11d5d02f4088d7053001ac12c5ddfa1504ca28a
+  resolved "https://codeload.github.com/siberex/point-of-view/tar.gz/f11d5d02f4088d7053001ac12c5ddfa1504ca28a"
   dependencies:
     fastify-plugin "^3.0.0"
     hashlru "^2.3.0"
