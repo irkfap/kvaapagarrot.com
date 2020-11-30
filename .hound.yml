@@ -1,5 +1,14 @@
 esversion: 6
+
 eslint:
   enabled: true
   version: 7.7.0
   config_file: .eslintrc
+
+stylelint:
+  enabled: true
+  version: 13.2.1
+  config_file: .stylelintrc.json
+
+shellcheck:
+  enabled: true
