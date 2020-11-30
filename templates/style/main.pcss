@@ -1,0 +1,119 @@
+@import 'colors.pcss';
+
+* {
+  font-family: Raleway, Helvetica, sans-serif;
+  font-weight: 400;
+}
+@supports (font-variation-settings: 'wght' 350) {
+  * {
+    font-family: Raleway, Helvetica, sans-serif;
+    /*noinspection CssInvalidPropertyValue*/
+    font-weight: 350;
+  }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: Lora, Georgia, serif;
+  font-weight: 400;
+}
+
+h1,
+h2,
+h3 {
+  font-size: 30pt;
+  font-weight: 500;
+}
+
+body {
+  background: $color-background;
+  color: $color-foreground;
+  margin: 2em;
+}
+
+p {
+  font-size: 18pt;
+}
+
+a {
+  color: $color-link;
+  text-decoration: none;
+}
+
+a:hover,
+a:focus {
+  color: $color-link-focus;
+  outline: none;
+  text-decoration: underline;
+  /*noinspection CssUnknownProperty*/
+  text-decoration-thickness: 0.9pt;
+  text-underline-position: under;
+
+  .font-icon {
+    color: $color-link-icon-focus;
+  }
+}
+
+a:active:focus {
+  outline: none;
+}
+
+@font-face {
+  font-display: swap;
+  font-family: 'fontello';
+  font-style: normal;
+  font-weight: normal;
+  src: url('/fontello/font/fontello.eot');
+  src: url('/fontello/font/fontello.eot#iefix') format('embedded-opentype'),
+    url('/fontello/font/fontello.woff2') format('woff2'),
+    url('/fontello/font/fontello.woff') format('woff'),
+    url('/fontello/font/fontello.ttf') format('truetype'),
+    url('/fontello/font/fontello.svg#fontello') format('svg');
+  /* , , , ,  */
+  unicode-range: U+F16D, U+F09A, U+F189, U+F1BD, U+F1B5;
+}
+
+.font-icon {
+  color: $color-link-icon;
+  display: inline-block;
+  font-family: fontello, fantasy;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: normal;
+  line-height: 0.9em;
+  margin-right: 0.4em;
+  speak: none;
+  text-align: center;
+  text-transform: none;
+  user-select: none;
+  width: 1em;
+}
+
+@media print {
+  body {
+    background: #fff;
+    color: #000;
+  }
+
+  a {
+    color: #2e2ea0;
+  }
+
+  /* stylelint-disable-next-line selector-no-qualifying-type */
+  a[href^='http']::after {
+    color: #666;
+    content: ' (' attr(href) ') ';
+    font-size: 70%;
+    vertical-align: 0;
+  }
+
+  .font-icon {
+    color: #777;
+  }
+}

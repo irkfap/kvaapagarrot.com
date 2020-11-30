@@ -1,11 +1,12 @@
 import typescript from '@rollup/plugin-typescript';
 import {terser} from 'rollup-plugin-terser';
 import run from '@rollup/plugin-run';
+import frontend from './rollup.frontend.config';
 
 const isWatchMode = process.env['ROLLUP_WATCH'] === 'true';
 const isDev = process.env['NODE_ENV'] === 'development';
 
-export default {
+const backend = {
   input: 'src/main.ts',
 
   output: [{
@@ -13,7 +14,7 @@ export default {
     format: 'es',
     // Use terser for production only
     plugins: [!isDev && terser()],
-    sourcemap: true
+    sourcemap: true,
   }],
 
   external: [
@@ -31,13 +32,15 @@ export default {
     typescript(),
     isWatchMode && run({
       execArgv: ['-r', 'source-map-support/register']
-    })
+    }),
   ],
 
   watch: {
     chokidar: true,
     // include and exclude govern which files to watch. by
     // default, all dependencies will be watched
-    exclude: ['node_modules/**']
-  }
+    exclude: ['node_modules/**'],
+  },
 };
+
+export default [frontend, backend];
