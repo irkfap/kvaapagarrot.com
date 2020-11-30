@@ -52,6 +52,7 @@ const ROUTE_FLAGS: RouteFlagsType = {
   'robots.txt': {expiration: '1s'},
   'sitemap.xml': {expiration: '1s'},
   '*.eot': 'application/vnd.ms-fontobject',
+  '*.map': 'application/json',
   '*.ttf': 'font/ttf',
   '*.woff': 'font/woff',
   '*.woff2': 'font/woff2',

@@ -57,6 +57,7 @@ jobs:
       - name: Generate static route handlers
         run: |
           yarn install
+          yarn build-frontend
           yarn static
 
       - name: Import Service Account key

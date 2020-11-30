@@ -11,7 +11,7 @@
   "type": "module",
   "scripts": {
     "build": "NODE_ENV=development rollup -c",
-    "build-frontend": "rollup -c rollup.frontend.config.js",
+    "build-frontend": "rollup -c rollup.frontend.config.js && rm public/dist/main.js",
     "deploy": "gcloud app deploy app.yaml --project kvaapagarrot --quiet",
     "gcp-build": "NODE_ENV=production rollup -c",
     "lint": "eslint '**/*.ts'",
