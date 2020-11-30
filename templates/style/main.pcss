@@ -1,3 +1,12 @@
+$color-background: #202020;
+$color-foreground: #fff;
+
+$color-link: #8e8eff;
+$color-link-focus: #82c4ff;
+$color-link-icon: #999;
+$color-link-icon-focus: #fff;
+
+
 * {
     font-family: Raleway, Helvetica, sans-serif;
     font-weight: 400;
@@ -20,8 +29,8 @@ h1, h2, h3 {
 }
 
 body {
-    background: #202020;
-    color: #fff;
+    background: $color-background;
+    color: $color-foreground;
     margin: 2em;
 }
 
@@ -30,23 +39,23 @@ p {
 }
 
 a {
-    color: #8e8eff;
+    color: $color-link;
     text-decoration: none;
 }
 a:hover, a:focus {
     outline: none;
-    color: #82c4ff;
+    color: $color-link-focus;
     text-decoration: underline;
     text-underline-position: under;
     /*noinspection CssUnknownProperty*/
     text-decoration-thickness: 0.9pt;
+
+    .font-icon {
+        color: $color-link-icon-focus;
+    }
 }
 a:active:focus {
     outline: none;
-}
-a:hover > .font-icon,
-a:focus > .font-icon {
-    color: #fff;
 }
 
 @font-face {
@@ -76,7 +85,7 @@ a:focus > .font-icon {
     text-transform: none;
     line-height: 0.9em;
     margin-right: 0.4em;
-    color: #999;
+    color: $color-link-icon;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     user-select: none;
