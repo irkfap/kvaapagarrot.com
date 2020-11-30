@@ -17,4 +17,9 @@ export default {
       sourceMap: true,
     }),
   ],
+
+  watch: {
+    chokidar: true,
+    exclude: ['node_modules/**'],
+  },
 };
