@@ -10,6 +10,7 @@ sonar-project.properties
 
 .eslintrc
 .prettierrc.json
+.stylelintrc.json
 
 .gcloudignore
 .git

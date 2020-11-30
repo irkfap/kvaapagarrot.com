@@ -1,4 +1,5 @@
 import postcss from 'rollup-plugin-postcss';
+import atImport from 'postcss-import';
 import precss from 'precss';
 import autoprefixer from 'autoprefixer';
 
@@ -13,7 +14,7 @@ export default {
   plugins: [
     postcss({
       extract: true,
-      plugins: [precss, autoprefixer],
+      plugins: [atImport, precss, autoprefixer],
       sourceMap: true,
     }),
   ],
