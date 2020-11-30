@@ -9,6 +9,7 @@ yarn watch
 ### Manual deployment
 
 ```bash
+yarn build-frontend
 yarn static
 yarn deploy
 ```
