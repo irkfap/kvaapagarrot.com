@@ -49,7 +49,7 @@
         as="style" onload="this.onload=null;this.rel='stylesheet'" media="screen,print">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500&family=Raleway:wght@350&display=swap" media="screen,print"></noscript>
 
-  <%~ includeFile('./_style', it) %>
+  <link rel="stylesheet" href="/dist/main.css">
 </head>
 <body role="document">
   <%~ it.body %>
