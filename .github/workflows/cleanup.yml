@@ -7,6 +7,9 @@ on:
   schedule:
     # At 00:00 every Sunday
     - cron:  '0 0 * * 0'
+  workflow_dispatch:
+    branches:
+      - main-kampf
 
 jobs:
 
