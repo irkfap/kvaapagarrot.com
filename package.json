@@ -21,7 +21,7 @@
     "watch": "NODE_ENV=development rollup -c -w"
   },
   "dependencies": {
-    "eta": "^1.12.0",
+    "eta": "^1.12.1",
     "fast-glob": "^3.2.4",
     "fastify": "^3.9.1",
     "fastify-static": "^3.3.0",
@@ -40,7 +40,7 @@
     "autoprefixer": "^9.0.0",
     "chokidar": "^3.4.3",
     "eslint": "^7.14.0",
-    "eslint-config-prettier": "^6.15.0",
+    "eslint-config-prettier": "^7.0.0",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-prettier": "^3.2.0",
     "js-yaml": "^3.14.1",
