@@ -2,6 +2,7 @@ name: app-engine
 
 env:
   GCLOUD_PROJECT_ID: kvaapagarrot
+  NODE_ENV: production
 
 on:
   push:
@@ -17,7 +18,9 @@ jobs:
   cancel-previous:
     name: Cancel Previous Jobs
     # Skip workflow entirely for [skip ci] commits
-    if: ${{ !contains(github.event.commits[0].message, '[skip ci]') && !contains(github.event.commits[0].message, '[no ci]') }}
+    if: |
+      false == contains(github.event.commits[0].message, '[skip ci]') &&
+      false == contains(github.event.commits[0].message, '[no ci]')
     runs-on: ubuntu-latest
     steps:
       - name: Cancel Previous Runs
@@ -28,7 +31,9 @@ jobs:
   lint:
     name: Lint Code
     # Skip workflow entirely for [skip ci] commits
-    if: ${{ !contains(github.event.commits[0].message, '[skip ci]') && !contains(github.event.commits[0].message, '[no ci]') }}
+    if: |
+      false == contains(github.event.commits[0].message, '[skip ci]') &&
+      false == contains(github.event.commits[0].message, '[no ci]')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -36,14 +41,16 @@ jobs:
 
       - name: Run linters
         run: |
-          yarn install
+          yarn install --frozen-lockfile
           yarn lint
           yarn slint
 
   deploy-gae:
     name: App Engine Deployment
     # Skip workflow entirely for [skip ci] commits
-    if: ${{ !contains(github.event.commits[0].message, '[skip ci]') && !contains(github.event.commits[0].message, '[no ci]') }}
+    if: |
+      false == contains(github.event.commits[0].message, '[skip ci]') &&
+      false == contains(github.event.commits[0].message, '[no ci]')
     runs-on: ubuntu-latest
     needs: [lint]
     # Map a step output to a job output
@@ -56,7 +63,7 @@ jobs:
 
       - name: Generate static route handlers
         run: |
-          yarn install
+          yarn install --frozen-lockfile
           yarn build-frontend
           yarn static
 
