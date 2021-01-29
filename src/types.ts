@@ -1,4 +1,4 @@
-import {ValidationResult} from 'fastify-error';
+import {ValidationResult} from 'fastify';
 
 export const symbolTimerStart = Symbol('timerStart');
 
