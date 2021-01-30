@@ -3,6 +3,7 @@ name: app-engine
 env:
   GCLOUD_PROJECT_ID: kvaapagarrot
   NODE_ENV: production
+  APP_VERSION: ${GITHUB_ACTOR//[\[\]]/}-${GITHUB_SHA:0:7}
 
 on:
   push:
@@ -79,12 +80,12 @@ jobs:
 
       - name: Deploy
         run: |
-          gcloud --quiet app deploy app.yaml --no-promote --version "${GITHUB_ACTOR//[\[\]]/}-${GITHUB_SHA:0:7}"
+          gcloud --quiet app deploy app.yaml --no-promote --version "${APP_VERSION}"
 
       - id: version-url
         name: Get deployed app version URL
         run: |
-          VERSION_URL=$(gcloud app versions describe "${GITHUB_ACTOR//[\[\]]/}-${GITHUB_SHA:0:7}" --service=default --format "value(versionUrl)")
+          VERSION_URL=$(gcloud app versions describe "${APP_VERSION}" --service=default --format "value(versionUrl)")
           echo $VERSION_URL
           echo "::set-output name=url::$(echo $VERSION_URL)"
 
@@ -133,4 +134,4 @@ jobs:
 
       - name: Promote deployed version to production
         run: |
-          gcloud --quiet app versions migrate "${GITHUB_ACTOR//[\[\]]/}-${GITHUB_SHA:0:7}" --service=default
+          gcloud --quiet app versions migrate "${APP_VERSION}" --service=default
