@@ -18,6 +18,8 @@ sonar-project.properties
 #!include:.gitignore
 
 /src/
+rollup.*.js
+tsconfig.json
 !node_modules
 !dist
 
