@@ -17,5 +17,9 @@ sonar-project.properties
 .gitignore
 #!include:.gitignore
 
+/src/
+!node_modules
+!dist
+
 # Generated static files
 !public/dist/

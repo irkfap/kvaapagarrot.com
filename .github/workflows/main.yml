@@ -40,9 +40,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Cache node modules
+        uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: yarn-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+          restore-keys: |
+            yarn-${{ runner.os }}-
+            yarn-
+
       - name: Run linters
         run: |
-          yarn install --frozen-lockfile
+          yarn install --production=false --frozen-lockfile --non-interactive
           yarn lint
           yarn slint
 
@@ -62,11 +71,26 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Cache node modules
+        uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: yarn-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+          restore-keys: |
+            yarn-${{ runner.os }}-
+            yarn-
+
       - name: Generate static route handlers
         run: |
-          yarn install --frozen-lockfile
+          yarn install --production=false --frozen-lockfile --non-interactive
           yarn build-frontend
           yarn static
+
+      - name: Build backend and cleanup for deploy
+        run: |
+          yarn build
+          rm -rf node_modules
+          yarn install --production --frozen-lockfile --non-interactive
 
       - name: Import Service Account key
         run: echo "${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}" | base64 -d > /tmp/auth.json

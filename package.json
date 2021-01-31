@@ -10,10 +10,9 @@
   },
   "type": "module",
   "scripts": {
-    "build": "NODE_ENV=development rollup -c",
+    "build": "rollup -c",
     "build-frontend": "rollup -c rollup.frontend.config.js && rm public/dist/main.js",
     "deploy": "gcloud app deploy app.yaml --project kvaapagarrot --quiet",
-    "gcp-build": "NODE_ENV=production rollup -c",
     "lint": "eslint '**/*.ts'",
     "slint": "stylelint '**/*.pcss'",
     "start": "node -r source-map-support/register dist/main",
