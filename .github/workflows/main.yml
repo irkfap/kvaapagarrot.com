@@ -89,7 +89,7 @@ jobs:
       - name: Cache node modules
         uses: actions/cache@v2
         with:
-          path: ${{needs.lint.outputs.yarn-cache-dir}}
+          path: ${{ needs.lint.steps.yarn-cache-dir.outputs.dir }}
           key: yarn-cache-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
           restore-keys: |
             yarn-cache-${{ runner.os }}-
