@@ -17,12 +17,20 @@ sonar-project.properties
 .gitignore
 #!include:.gitignore
 
+# Explainer:
+# App is built with Github Actions workflow, check out .github/workflows/main.yml
+# So, GAE upload will skip sources and build configs, and upload dist files instead.
 /src/
 /templates/style/
 rollup.*.js
 tsconfig.json
-!node_modules
 !dist
+
+# TODO: check for any performance gain on Cloud Build when uploading node_modules
+#   GAE will install node_modules no matter what with it's Cloud Build step.
+#   GAE requires yarn.lock to install them.
+#   Currently node_modules upload skipped with #!include:.gitignore
+#   Could uploading node_modules reduce Cloud Build time?
 
 # Generated static files
 !public/dist/

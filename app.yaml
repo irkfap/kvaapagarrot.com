@@ -23,7 +23,9 @@ inbound_services:
 
 default_expiration: "7d"
 
-# @see scripts/make-static-handlers.ts
-# run with: yarn static
+# Static routes are generated before gcloud app deploy
+# Check out scripts/make-static-handlers.ts
+# Run manually with: yarn static
+# Not required for dev server (static files are served by Fastify)
 includes:
   - routes.yaml

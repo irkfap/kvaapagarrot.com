@@ -39,9 +39,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - uses: actions/setup-node@v2
+      # Preferable to use the same version as in GAE environment
+      - name: Set Node.js version
+        uses: actions/setup-node@v2
         with:
-          node-version: '14'
+          node-version: '14.15.4'
 
       - name: Cache node modules
         uses: actions/cache@v2
@@ -74,9 +76,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - uses: actions/setup-node@v2
+      # Preferable to use the same version as in GAE environment
+      - name: Set Node.js version
+        uses: actions/setup-node@v2
         with:
-          node-version: '14'
+          node-version: '14.15.4'
 
       - name: Cache node modules
         uses: actions/cache@v2
@@ -87,17 +91,18 @@ jobs:
             yarn-${{ runner.os }}-
             yarn-
 
-      - name: Generate static route handlers
+      - name: Build all
         run: |
           yarn install --production=false --frozen-lockfile --non-interactive
-          yarn build-frontend
-          yarn static
-
-      - name: Build backend and cleanup for deploy
-        run: |
           yarn build
-          rm -rf node_modules
-          yarn install --production --frozen-lockfile --non-interactive
+          rm public/dist/main.js
+
+      - name: Generate static route handlers
+        run: yarn static
+
+#      - name: Keep prod node_modules for GAE upload
+#        run: |
+#          yarn install --production=true --frozen-lockfile --non-interactive --force
 
       - name: Import Service Account key
         run: echo "${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}" | base64 -d > /tmp/auth.json
@@ -134,6 +139,9 @@ jobs:
         run: |
           curl "https://raw.githubusercontent.com/irkfap/kvaapagarrot.com/${GITHUB_SHA}/lighthouserc.json" \
           --silent --location --output "$GITHUB_WORKSPACE/lighthouserc.json"
+
+      - name: Warmup deployed instance
+        run: curl -sIX GET "${{needs.deploy-gae.outputs.version-url}}"
 
       - name: Audit URLs using Lighthouse
         uses: treosh/lighthouse-ci-action@v3
