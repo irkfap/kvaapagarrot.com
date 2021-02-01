@@ -26,11 +26,12 @@ rollup.*.js
 tsconfig.json
 !dist
 
-# TODO: check for any performance gain on Cloud Build when uploading node_modules
+# Debug: check for performance gain on Cloud Build when uploading node_modules...
 #   GAE will install node_modules no matter what with it's Cloud Build step.
 #   GAE requires yarn.lock to install them.
-#   Currently node_modules upload skipped with #!include:.gitignore
+#   node_modules upload skipped with #!include:.gitignore, reverting that here
 #   Could uploading node_modules reduce Cloud Build time?
+!node_modules
 
 # Generated static files
 !public/dist/
