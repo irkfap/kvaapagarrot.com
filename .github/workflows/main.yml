@@ -3,7 +3,7 @@ name: app-engine
 env:
   GCLOUD_PROJECT_ID: kvaapagarrot
   NODE_ENV: production
-  APP_VERSION: ${GITHUB_ACTOR//[\[\]]/}-${GITHUB_SHA:0:7}
+  APP_VERSION: "${GITHUB_ACTOR//[\[\]]/}-${GITHUB_SHA:0:7}"
 
 on:
   push:
