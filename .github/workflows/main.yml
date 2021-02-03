@@ -35,6 +35,10 @@ jobs:
       false == contains(github.event.commits[0].message, '[skip ci]') &&
       false == contains(github.event.commits[0].message, '[no ci]')
     runs-on: ubuntu-latest
+    # Map a step output to a job output
+    outputs:
+      yarn-cache-dir: ${{ steps.yarn-cache-dir.outputs.dir }}
+
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -89,7 +93,7 @@ jobs:
       - name: Cache node modules
         uses: actions/cache@v2
         with:
-          path: ${{ needs.lint.steps.yarn-cache-dir.outputs.dir }}
+          path: ${{needs.lint.outputs.yarn-cache-dir}}
           key: yarn-cache-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
           restore-keys: |
             yarn-cache-${{ runner.os }}-
