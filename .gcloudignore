@@ -17,5 +17,23 @@ sonar-project.properties
 .gitignore
 #!include:.gitignore
 
+# Explainer:
+# App is built with Github Actions workflow, check out .github/workflows/main.yml
+# So, GAE upload will skip sources and build configs, and upload dist files instead.
+/src/
+/templates/style/
+rollup.*.js
+tsconfig.json
+!dist
+
+# Note preinstall script in the package.json!
+# It will unpack uploaded node_modules.tar.gz before installing dependencies.
+# node_modules dir upload is skipped deliberately (with #!include:.gitignore).
+# Cloud Build step for GAE standard environment removes node_modules dir before running yarn install step.
+# Here is an explanation for this hack: https://stackoverflow.com/a/39028187/1412330
+# Also note:
+# Not uploading package.json and yarn.lock while uploading node_modules will not work,
+# GAE requires either one of those and always runs npm/yarn install step.
+
 # Generated static files
 !public/dist/
