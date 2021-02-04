@@ -53,7 +53,7 @@ jobs:
         id: yarn-cache-dir
         run: echo "::set-output name=dir::$(yarn cache dir)"
 
-      - name: Cache node modules
+      - name: Cache yarn cache dir
         uses: actions/cache@v2
         with:
           path: ${{ steps.yarn-cache-dir.outputs.dir }}
@@ -61,6 +61,15 @@ jobs:
           restore-keys: |
             yarn-cache-${{ runner.os }}-
             yarn-cache-
+
+      - name: Cache node modules
+        uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: node_modules-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+          restore-keys: |
+            node_modules-${{ runner.os }}-
+            node_modules-
 
       - name: Run linters
         run: |
@@ -90,7 +99,7 @@ jobs:
         with:
           node-version: '14.15.4'
 
-      - name: Cache node modules
+      - name: Cache yarn cache dir
         uses: actions/cache@v2
         with:
           path: ${{needs.lint.outputs.yarn-cache-dir}}
@@ -98,6 +107,15 @@ jobs:
           restore-keys: |
             yarn-cache-${{ runner.os }}-
             yarn-cache-
+
+      - name: Cache node modules
+        uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: node_modules-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+          restore-keys: |
+            node_modules-${{ runner.os }}-
+            node_modules-
 
       - name: Build all
         run: |
