@@ -49,6 +49,8 @@ a:focus {
   color: $color-link-focus;
   outline: none;
   text-decoration: underline;
+  /* text-decoration-thickness will not work in Chrome without setting text-decoration-color */
+  text-decoration-color: $color-link-focus;
   /*noinspection CssUnknownProperty*/
   text-decoration-thickness: 0.9pt;
   text-underline-position: under;
