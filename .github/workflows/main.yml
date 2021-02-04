@@ -108,9 +108,11 @@ jobs:
       - name: Generate static route handlers
         run: yarn static
 
-      - name: Keep only prod dependencies for GAE upload
+      - name: Save prod dependencies for GAE upload
         run: |
           yarn install --production=true --frozen-lockfile --non-interactive
+          tar -czf node_modules.tar.gz node_modules
+          ls -lah node_modules.tar.gz | awk '{print $5,$9}'
 
       - name: Import Service Account key
         run: echo "${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}" | base64 -d > /tmp/auth.json
