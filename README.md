@@ -9,10 +9,19 @@ yarn watch
 ### Manual deployment
 
 ```bash
-yarn build-frontend
+yarn build
 yarn static
 yarn deploy
 ```
+
+### Build container locally
+
+```bash
+pack build kvaapagarrot-local --builder gcr.io/buildpacks/builder
+docker run --rm -p 8080:8080 kvaapagarrot-local
+docker stop $(docker ps --filter "ancestor=kvaapagarrot-local" --format "{{.Names}}" --quiet)
+```
+
 
 ### [GitHub Actions setup for App Engine](https://github.com/GoogleCloudPlatform/github-actions/tree/master/setup-gcloud)
 
