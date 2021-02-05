@@ -1,5 +1,9 @@
 import {join as pathJoin} from 'path';
-import fastify, {FastifyReply, FastifyRequest, FastifyServerOptions} from 'fastify';
+import fastify, {
+  FastifyReply,
+  FastifyRequest,
+  FastifyServerOptions,
+} from 'fastify';
 import {FastifyError} from 'fastify-error';
 import fastifyStatic from 'fastify-static';
 import pointOfView from 'point-of-view';

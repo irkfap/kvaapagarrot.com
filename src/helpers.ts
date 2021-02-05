@@ -53,4 +53,8 @@ const CLOUDFLARE_IP_RANGES = `
 2c0f:f248::/32
 `;
 
-export const trustedProxies = ['127.0.0.1', '::1', ...CLOUDFLARE_IP_RANGES.split('\n').filter(Boolean)];
+export const trustedProxies = [
+  '127.0.0.1',
+  '::1',
+  ...CLOUDFLARE_IP_RANGES.split('\n').filter(Boolean),
+];
