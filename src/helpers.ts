@@ -56,5 +56,6 @@ const CLOUDFLARE_IP_RANGES = `
 export const trustedProxies = [
   '127.0.0.1',
   '::1',
+  '169.254.0.0/16',
   ...CLOUDFLARE_IP_RANGES.split('\n').filter(Boolean),
 ];
