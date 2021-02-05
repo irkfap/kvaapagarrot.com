@@ -18,6 +18,8 @@ entrypoint: node -r source-map-support/register dist/main
 env_variables:
   NODE_ENV: production
 
+# https://cloud.google.com/appengine/docs/standard/nodejs/configuring-warmup-requests
+# Note: Manual or basic scaling instances do not receive an /_ah/warmup request.
 inbound_services:
   - warmup
 
