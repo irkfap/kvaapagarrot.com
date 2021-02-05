@@ -7,7 +7,7 @@
   <meta name="robots" content="index, follow">
   <link type="text/plain" rel="author" href="https://kvaapagarrot.com/humans.txt">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
   <link rel="dns-prefetch" href="https://fonts.googleapis.com">
   <link rel="dns-prefetch" href="https://fonts.gstatic.com">
   <link rel="dns-prefetch" href="https://www.googletagmanager.com">
@@ -45,9 +45,7 @@
   <meta property="twitter:description" content="Siberian artist">
   <meta property="twitter:image" content="https://kvaapagarrot.com/img/open-graph-cover.jpg">
 
-  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500&family=Raleway:wght@350&display=swap"
-        as="style" onload="this.onload=null;this.rel='stylesheet'" media="screen,print">
-  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500&family=Raleway:wght@350&display=swap" media="screen,print"></noscript>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500&family=Raleway:wght@350&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="/dist/main.css">
 </head>
