@@ -1,5 +1,9 @@
 import {join as pathJoin} from 'path';
-import fastify, {FastifyReply, FastifyRequest} from 'fastify';
+import fastify, {
+  FastifyReply,
+  FastifyRequest,
+  FastifyServerOptions,
+} from 'fastify';
 import {FastifyError} from 'fastify-error';
 import fastifyStatic from 'fastify-static';
 import pointOfView from 'point-of-view';
@@ -7,7 +11,7 @@ import * as eta from 'eta';
 import {PartialConfig as EtaOptions} from 'eta/dist/types/config';
 import glob from 'fast-glob';
 import {symbolTimerStart, ErrorPayload} from './types';
-import {getUserCountry, getUserIp} from './helpers';
+import {getUserCountry, trustedProxies} from './helpers';
 import {trapRoutes, getTrapped} from './trapRoutes';
 import {LRU} from './lru';
 
@@ -18,7 +22,12 @@ const TEMPLATE_DIR = pathJoin(CWD, 'templates');
 const TPL_EXTENSION = 'eta';
 const isDev = process.env['NODE_ENV'] === 'development';
 
-const server = fastify();
+// https://github.com/fastify/fastify/blob/3634c6e01e4049e946da68647a6aaf5847dbccbd/docs/Server.md#trustproxy
+const serverOptions: FastifyServerOptions = {
+  trustProxy: trustedProxies,
+};
+
+const server = fastify(serverOptions);
 
 server.decorateRequest(symbolTimerStart, null);
 
@@ -188,7 +197,7 @@ server.get('/ping', async (request: FastifyRequest, reply: FastifyReply) => {
     success: true,
     env: process.env['NODE_ENV'],
     user: {
-      ip: getUserIp(request),
+      ip: request.ip,
       country: getUserCountry(request),
     },
   });
@@ -196,7 +205,7 @@ server.get('/ping', async (request: FastifyRequest, reply: FastifyReply) => {
 
 server.head('/ping', async (request, reply) => {
   void reply
-    .header('X-Client-Ip', getUserIp(request))
+    .header('X-Client-Ip', request.ip)
     .header('X-Client-Country', getUserCountry(request))
     .status(200)
     .send();
