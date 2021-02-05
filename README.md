@@ -14,7 +14,7 @@ yarn static
 yarn deploy
 ```
 
-### Build container locally
+### Build container locally with [Buildpacks](https://buildpacks.io/docs/tools/pack/)
 
 ```bash
 pack build kvaapagarrot-local --builder gcr.io/buildpacks/builder
