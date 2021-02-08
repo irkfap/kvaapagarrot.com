@@ -170,7 +170,7 @@ jobs:
         run: curl -sIX GET "${{needs.deploy-gae.outputs.version-url}}"
 
       - name: Audit URLs using Lighthouse
-        uses: treosh/lighthouse-ci-action@v3
+        uses: treosh/lighthouse-ci-action@7.0.0
         with:
           urls: |
             ${{needs.deploy-gae.outputs.version-url}}
