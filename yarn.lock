@@ -2820,10 +2820,10 @@ pkg-dir@^2.0.0:
   dependencies:
     find-up "^2.1.0"
 
-point-of-view@^4.11.0:
-  version "4.11.0"
-  resolved "https://registry.yarnpkg.com/point-of-view/-/point-of-view-4.11.0.tgz#6f29d8a8559d7db3b4e80a621c618cd147c21de2"
-  integrity sha512-PkgjBo/1+oIG+k/lY33ar1CG4fC9Rm4skGMETZSzNzLGXtR83AzzeF4Avym+cRpwNsBXDOCOksCRiu+/C9iVXg==
+point-of-view@^4.12.0:
+  version "4.12.0"
+  resolved "https://registry.yarnpkg.com/point-of-view/-/point-of-view-4.12.0.tgz#c06d3c3755545857f44bcb501947c1e760a013c6"
+  integrity sha512-WzCH07QxJMoff9NFVV/68iMjWXj/R/Dx98kwmv4QS/2nb91iujnK4yhvCDjJgTd3RVHftbD928/WAlGFcURkBQ==
   dependencies:
     fastify-plugin "^3.0.0"
     hashlru "^2.3.0"
