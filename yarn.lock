@@ -2493,10 +2493,10 @@ mkdirp@~0.5.1:
   dependencies:
     minimist "^1.2.5"
 
-mnemonist@^0.38.1:
-  version "0.38.1"
-  resolved "https://registry.yarnpkg.com/mnemonist/-/mnemonist-0.38.1.tgz#4835f982c18713fc97ddf30756529f57cfa3b635"
-  integrity sha512-I674bCCj9p87Re+gv15ynDrP14XjcmLR7tBO22l3UoxQLniyIXdD9vid2sSxYkyOr0fZwJTA+dXRvrwANgdnyg==
+mnemonist@^0.38.2:
+  version "0.38.2"
+  resolved "https://registry.yarnpkg.com/mnemonist/-/mnemonist-0.38.2.tgz#974e0df26440dbcbded2d10e9b25ca01f5e7949f"
+  integrity sha512-2HhwaRDP9qWNvALd7p6EOwNRbPL/xQuvKR+4ImLoWLgWrfijyNUX9q1l4KXmCzNEw1Osbgxim0KeESXDmcG6Qg==
   dependencies:
     obliterator "^1.6.1"
 
