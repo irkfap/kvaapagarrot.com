@@ -182,6 +182,7 @@ jobs:
 
   production:
     name: Update Production
+    environment: production
     runs-on: ubuntu-latest
     # Run only after successful deployment and Lighthouse audit
     needs: [deploy-gae, lighthouse]
