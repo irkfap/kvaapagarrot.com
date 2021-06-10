@@ -17,9 +17,11 @@ export const trapRoutes = `
 /vendor/phpunit/phpunit/*
 /xmlrpc.php
 /phpmyadmin
+/adminer.php
 
 # WordPress
 /wp-login.php
+/*/wp-login.php
 /wp-admin
 /wp-admin/*
 /*/wp-admin/*
