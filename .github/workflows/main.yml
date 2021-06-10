@@ -91,6 +91,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - uses: ahmadnassri/action-dependabot-auto-merge@v2
+
       # Preferable to use the same version as in GAE environment
       - name: Set Node.js version
         uses: actions/setup-node@v2
