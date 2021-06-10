@@ -24,6 +24,7 @@ const isDev = process.env['NODE_ENV'] === 'development';
 
 // https://github.com/fastify/fastify/blob/3634c6e01e4049e946da68647a6aaf5847dbccbd/docs/Server.md#trustproxy
 const serverOptions: FastifyServerOptions = {
+  logger: true,
   trustProxy: trustedProxies,
 };
 
@@ -36,11 +37,9 @@ server.setErrorHandler((error: FastifyError, _request, reply): void => {
 
   // Log error
   if (statusCode >= 500) {
-    console.error(error);
-    // reply.log.error(error);
+    reply.log.error(error.message);
   } else if (statusCode >= 400) {
-    console.info(error);
-    // reply.log.info(error);
+    reply.log.info(error.message);
   }
 
   const payload: ErrorPayload = {
@@ -204,7 +203,7 @@ server.get('/ping', async (request: FastifyRequest, reply: FastifyReply) => {
 });
 
 server.head('/ping', async (request, reply) => {
-  void reply
+  reply
     .header('X-Client-Ip', request.ip)
     .header('X-Client-Country', getUserCountry(request))
     .status(200)
@@ -242,7 +241,6 @@ const createTrapRoutes = function () {
     .split('\n')
     .filter((v: string) => v && v[0] !== '#')
     .map((v: string) => v.replace(wildcardRegex, '/:segment(.*)'));
-  // console.log(routes);
 
   for (const url of routes) {
     server.route({
@@ -253,10 +251,6 @@ const createTrapRoutes = function () {
   }
 };
 createTrapRoutes();
-
-// server.ready(() => {
-//   console.log(server.printRoutes());
-// });
 
 server.listen(PORT, '0.0.0.0', (err, address) => {
   if (err) {

@@ -97,7 +97,6 @@ void (async () => {
     const routes: RouteType[] = [];
     console.info('📌 Creating static routes...');
 
-    // const pattern = '**/('+Object.keys(ROUTE_FLAGS).join('|')+')';
     const pattern = Object.keys(ROUTE_FLAGS).map((k) => `**/${k}`);
 
     const filesKnown = await glob(pattern, GLOB_OPTIONS);
