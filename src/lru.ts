@@ -10,7 +10,7 @@ export class LRU {
     this.cache = new LRUCache(
       String,
       // @ts-ignore: No need to align types here.
-      (Function as TemplateFunction) as IArrayLikeConstructor,
+      Function as TemplateFunction as IArrayLikeConstructor,
       capacity,
     );
   }
