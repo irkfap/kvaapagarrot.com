@@ -7,9 +7,9 @@ dist/
 # GAE
 routes.yaml
 
-# Jetbrains
-.idea/**
-.ijwb/**
+# JetBrains
+/.idea/
+/.ijwb/
 
 # MacOS
 .DS_Store
