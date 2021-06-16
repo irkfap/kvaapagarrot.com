@@ -203,10 +203,11 @@ server.get('/ping', async (request: FastifyRequest, reply: FastifyReply) => {
 });
 
 server.head('/ping', async (request, reply) => {
-  return reply
+  void reply
     .header('X-Client-Ip', request.ip)
     .header('X-Client-Country', getUserCountry(request))
-    .status(200);
+    .status(204);
+  return '';
 });
 
 server.get('/', async (_request, reply) => {
