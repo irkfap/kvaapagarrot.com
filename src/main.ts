@@ -129,7 +129,7 @@ server.addHook(
     if (isDev) {
       const duration =
         Math.round((reply.getResponseTime() + Number.EPSILON) * 1e3) / 1e3;
-      console.debug(`${duration}ms\t${request.method} ${request.url}`);
+      reply.log.info(`${duration}ms\t${request.method} ${request.url}`);
     }
     done();
   },
@@ -141,11 +141,11 @@ server.addHook(
  * before any live requests are made. Manual or basic scaling instances do not receive an `/_ah/warmup` request.
  */
 server.get('/_ah/warmup', async (_request, reply) => {
-  console.info('Warmup initiated');
+  reply.log.info('Warmup initiated');
 
   // Pre-cache all templates to memory
   if (eta.config.cache) {
-    console.info('Precaching templates...');
+    reply.log.info('Precaching templates...');
 
     const templates = await glob(`**/*.${TPL_EXTENSION}`, {
       braceExpansion: false,
@@ -175,13 +175,12 @@ server.get('/_ah/warmup', async (_request, reply) => {
       } catch (err) {
         // do nothing
       }
-      console.info(`[${res ? '✓' : '×'}] ${filename}`);
+      reply.log.info(`[${res ? '✓' : '×'}] ${filename}`);
     }
   }
 
-  void reply
-    .header('Content-Type', 'application/json; charset=utf-8')
-    .send({success: true});
+  void reply.header('Content-Type', 'application/json; charset=utf-8');
+  return {success: true};
 });
 
 server.get('/ping', async (request: FastifyRequest, reply: FastifyReply) => {
@@ -192,22 +191,22 @@ server.get('/ping', async (request: FastifyRequest, reply: FastifyReply) => {
     );
   }
 
-  void reply.header('Content-Type', 'application/json; charset=utf-8').send({
+  void reply.header('Content-Type', 'application/json; charset=utf-8');
+  return {
     success: true,
     env: process.env['NODE_ENV'],
     user: {
       ip: request.ip,
       country: getUserCountry(request),
     },
-  });
+  };
 });
 
 server.head('/ping', async (request, reply) => {
-  reply
+  return reply
     .header('X-Client-Ip', request.ip)
     .header('X-Client-Country', getUserCountry(request))
-    .status(200)
-    .send();
+    .status(200);
 });
 
 server.get('/', async (_request, reply) => {
@@ -218,7 +217,7 @@ server.get('/', async (_request, reply) => {
     );
   }
 
-  void reply.view('index', {});
+  return reply.view('index', {});
 });
 
 const redirectTrap = function (

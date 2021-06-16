@@ -169,7 +169,7 @@ jobs:
           --silent --location --output "$GITHUB_WORKSPACE/lighthouserc.json"
 
       - name: Warmup deployed instance
-        run: curl -sIX GET "${{needs.deploy-gae.outputs.version-url}}"
+        run: curl --silent --fail --head --write-out "%{http_code}" --request GET "${{needs.deploy-gae.outputs.version-url}}"
 
       - name: Audit URLs using Lighthouse
         uses: treosh/lighthouse-ci-action@7.0.0
