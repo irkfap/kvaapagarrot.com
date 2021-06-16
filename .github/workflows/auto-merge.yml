@@ -7,7 +7,6 @@ on:
     workflows:
       # List all required workflow names here.
       - 'app-engine'
-      - 'SonarCloud'
       - 'CodeQL'
 
 jobs:
