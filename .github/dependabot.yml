@@ -9,8 +9,6 @@ updates:
     commit-message:
       prefix: "chore(deps):"
     versioning-strategy: increase
-    reviewers:
-      - siberex
 
   - package-ecosystem: github-actions
     directory: "/"
@@ -20,5 +18,3 @@ updates:
       time: "06:00"
     commit-message:
       prefix: "chore(deps):"
-    reviewers:
-      - siberex
