@@ -1,5 +1,6 @@
 import {join as pathJoin} from 'path';
 import fastify, {
+  FastifyInstance,
   FastifyReply,
   FastifyRequest,
   FastifyServerOptions,
@@ -10,7 +11,7 @@ import pointOfView from 'point-of-view';
 import * as eta from 'eta';
 import {PartialConfig as EtaOptions} from 'eta/dist/types/config';
 import glob from 'fast-glob';
-import {symbolTimerStart, ErrorPayload} from './types';
+import {ErrorPayload} from './types';
 import {getUserCountry, trustedProxies} from './helpers';
 import {trapRoutes, getTrapped} from './trapRoutes';
 import {LRU} from './lru';
@@ -28,9 +29,9 @@ const serverOptions: FastifyServerOptions = {
   trustProxy: trustedProxies,
 };
 
-const server = fastify(serverOptions);
+const server: FastifyInstance = fastify(serverOptions);
 
-server.decorateRequest(symbolTimerStart, null);
+server.decorateRequest('timerStart', null);
 server.decorateReply('locals', null);
 server.decorate('isDev', isDev);
 
@@ -112,14 +113,13 @@ server.addHook('preHandler', function (_request, reply, done) {
 });
 
 server.addHook('onRequest', (request, _reply, done) => {
-  request[symbolTimerStart] = process.hrtime.bigint();
+  request.timerStart = process.hrtime.bigint();
   done();
 });
 
 server.addHook('onSend', (request, reply, _payload, done) => {
   const timerEnd = process.hrtime.bigint();
-  const timerStart = request[symbolTimerStart];
-  let duration = Number(timerEnd - timerStart) / 1e6; // ms
+  let duration = Number(timerEnd - request.timerStart) / 1e6; // ms
   duration = Math.round((duration + Number.EPSILON) * 1e3) / 1e3;
   void reply.header('Server-Timing', `render;dur=${duration}`);
   done();

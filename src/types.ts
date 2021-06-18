@@ -1,14 +1,12 @@
 import {ValidationResult} from 'fastify';
 
-export const symbolTimerStart = Symbol.for('timerStart');
-
 interface Locals {
   isDev: boolean;
 }
 
 declare module 'fastify' {
   interface FastifyRequest {
-    [symbolTimerStart]: bigint;
+    timerStart: bigint;
   }
 
   interface FastifyReply {
@@ -16,7 +14,9 @@ declare module 'fastify' {
     locals?: Partial<Locals>;
   }
 
-  export const isDev: boolean;
+  interface FastifyInstance {
+    isDev: boolean;
+  }
 }
 
 export interface ErrorPayload {
