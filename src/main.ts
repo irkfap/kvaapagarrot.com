@@ -31,6 +31,8 @@ const serverOptions: FastifyServerOptions = {
 const server = fastify(serverOptions);
 
 server.decorateRequest(symbolTimerStart, null);
+server.decorateReply('locals', null);
+server.decorate('isDev', isDev);
 
 server.setErrorHandler((error: FastifyError, _request, reply): void => {
   const statusCode = error.statusCode || 500;
