@@ -172,7 +172,7 @@ jobs:
         run: curl --silent --fail --head --write-out "%{http_code}" --request GET "${{needs.deploy-gae.outputs.version-url}}"
 
       - name: Check static deployed
-        run: curl --silent --fail --head --write-out "%{http_code}" --request GET "${{needs.deploy-gae.outputs.version-url}}/robots.txt"
+        run: curl --silent --fail --include --request GET "${{needs.deploy-gae.outputs.version-url}}/robots.txt"
 
       - name: Audit URLs using Lighthouse
         uses: treosh/lighthouse-ci-action@8.0.0
