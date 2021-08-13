@@ -28,7 +28,7 @@
     "mnemonist": "0.38.3",
     "point-of-view": "4.15.1",
     "source-map-support": "0.5.19",
-    "tslib": "2.3.0"
+    "tslib": "2.3.1"
   },
   "devDependencies": {
     "@rollup/plugin-run": "2.0.2",
