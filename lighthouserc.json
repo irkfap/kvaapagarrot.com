@@ -3,6 +3,7 @@
     "assert": {
       "preset": "lighthouse:recommended",
       "assertions": {
+        "csp-xss": ["warn"],
         "render-blocking-resources": ["warn", {"maxLength": 0}],
         "offline-start-url": "off",
         "service-worker": "off",
