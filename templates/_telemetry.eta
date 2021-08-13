@@ -1,5 +1,7 @@
 
 <% if (!it.isDev) { %>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "6e4f1ab8a04e4b8cbb1d772964d055a2"}'></script><!-- End Cloudflare Web Analytics -->
+
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-180787236-1"></script>
   <script>
