@@ -143,7 +143,7 @@ jobs:
 
       - name: Deploy
         run: |
-          gcloud --quiet app deploy app.yaml --no-promote --version "${GITHUB_ACTOR//[\[\]]/}-${GITHUB_SHA:0:7}"
+          yarn deploy --no-promote --version "${GITHUB_ACTOR//[\[\]]/}-${GITHUB_SHA:0:7}"
 
       - id: version-url
         name: Get deployed app version URL
