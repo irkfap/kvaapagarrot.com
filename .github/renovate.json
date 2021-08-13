@@ -2,10 +2,29 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "labels": ["dependencies"],
   "baseBranches": ["main-kampf"],
+  "extends": [
+    ":automergePatch",
+    ":automergeMinor"
+  ],
   "packageRules": [
     {
-      "matchUpdateTypes": ["minor", "patch"],
-      "matchCurrentVersion": "!/^0/",
+      "matchPackagePatterns": [ "^eslint", "^@typescript-eslint" ],
+      "groupName": "eslint",
+      "automerge": true
+    },
+    {
+      "matchPackagePatterns": [ "^postcss", "^precss", "^autoprefixer" ],
+      "groupName": "postcss",
+      "automerge": true
+    },
+    {
+      "matchPackagePatterns": [ "^rollup", "^@rollup" ],
+      "groupName": "rollup",
+      "automerge": true
+    },
+    {
+      "matchPackagePatterns": [ "^stylelint" ],
+      "groupName": "stylelint",
       "automerge": true
     }
   ]
