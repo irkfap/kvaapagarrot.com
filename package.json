@@ -49,7 +49,7 @@
     "precss": "4.0.0",
     "prettier": "2.3.2",
     "rollup": "2.56.2",
-    "rollup-plugin-postcss": "4.0.0",
+    "rollup-plugin-postcss": "4.0.1",
     "rollup-plugin-terser": "7.0.2",
     "stylelint": "13.13.1",
     "stylelint-config-sass-guidelines": "8.0.0",
