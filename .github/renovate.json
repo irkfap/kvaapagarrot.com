@@ -3,6 +3,7 @@
   "labels": ["dependencies"],
   "baseBranches": ["main-kampf"],
   "extends": [
+    "config:base",
     ":automergePatch",
     ":automergeMinor"
   ],
