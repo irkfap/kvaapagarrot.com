@@ -24,7 +24,7 @@
     "eta": "1.12.3",
     "fast-glob": "3.2.7",
     "fastify": "3.22.0",
-    "fastify-static": "4.2.4",
+    "fastify-static": "4.3.0",
     "mnemonist": "0.38.4",
     "point-of-view": "4.15.2",
     "source-map-support": "0.5.20",
