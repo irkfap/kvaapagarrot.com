@@ -28,6 +28,7 @@ export const trapRoutes = `
 /wp-includes
 /wp-includes/*
 /*/wp-includes/*
+/wp-config.*
 
 # Apache
 /.htaccess
