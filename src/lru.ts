@@ -1,6 +1,6 @@
 import LRUCache from 'mnemonist/lru-cache.js';
-import {IArrayLikeConstructor} from 'mnemonist/utils/types';
-import {TemplateFunction} from 'eta/dist/types/compile';
+import {IArrayLikeConstructor} from 'mnemonist/utils/types.d';
+import {TemplateFunction} from 'eta/dist/types/compile.d';
 
 export class LRU {
   private cache: LRUCache<string, TemplateFunction>;

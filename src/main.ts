@@ -9,7 +9,7 @@ import {FastifyError} from 'fastify-error';
 import fastifyStatic from 'fastify-static';
 import pointOfView from 'point-of-view';
 import * as eta from 'eta';
-import {PartialConfig as EtaOptions} from 'eta/dist/types/config';
+import {PartialConfig as EtaOptions} from 'eta/dist/types/config.d';
 import glob from 'fast-glob';
 import {ErrorPayload} from './types';
 import {getUserCountry, trustedProxies} from './helpers';
