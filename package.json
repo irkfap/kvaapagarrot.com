@@ -25,7 +25,7 @@
     "fast-glob": "3.2.7",
     "fastify": "3.22.1",
     "fastify-static": "4.4.2",
-    "mnemonist": "0.38.4",
+    "mnemonist": "0.38.5",
     "point-of-view": "4.15.2",
     "source-map-support": "0.5.20",
     "tslib": "2.3.1"
