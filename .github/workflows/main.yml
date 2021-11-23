@@ -52,7 +52,7 @@ jobs:
         run: echo "::set-output name=dir::$(yarn cache dir)"
 
       - name: Cache yarn cache dir
-        uses: actions/cache@v2.1.6
+        uses: actions/cache@v2.1.7
         with:
           path: ${{ steps.yarn-cache-dir.outputs.dir }}
           key: yarn-cache-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
@@ -61,7 +61,7 @@ jobs:
             yarn-cache-
 
       - name: Cache node modules
-        uses: actions/cache@v2.1.6
+        uses: actions/cache@v2.1.7
         with:
           path: node_modules
           key: node_modules-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
@@ -99,7 +99,7 @@ jobs:
           node-version: '14.17.6'
 
       - name: Cache yarn cache dir
-        uses: actions/cache@v2.1.6
+        uses: actions/cache@v2.1.7
         with:
           path: ${{needs.lint.outputs.yarn-cache-dir}}
           key: yarn-cache-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
@@ -108,7 +108,7 @@ jobs:
             yarn-cache-
 
       - name: Cache node modules
-        uses: actions/cache@v2.1.6
+        uses: actions/cache@v2.1.7
         with:
           path: node_modules
           key: node_modules-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
