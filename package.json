@@ -44,7 +44,7 @@
     "eslint-plugin-import": "2.25.3",
     "eslint-plugin-prettier": "4.0.0",
     "js-yaml": "4.1.0",
-    "postcss": "8.4.0",
+    "postcss": "8.4.1",
     "postcss-import": "14.0.2",
     "precss": "4.0.0",
     "prettier": "2.4.1",
