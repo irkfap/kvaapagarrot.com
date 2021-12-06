@@ -26,7 +26,7 @@
     "fastify": "3.24.1",
     "fastify-static": "4.5.0",
     "mnemonist": "0.39.0",
-    "point-of-view": "4.15.3",
+    "point-of-view": "4.16.0",
     "source-map-support": "0.5.21",
     "tslib": "2.3.1"
   },
