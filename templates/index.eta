@@ -1,9 +1,20 @@
 <% layout('./_base') %>
 
-  <h1 lang="en">Margarita Kvaapagarrot</h1>
+  <h1>Margarita Kvaapagarrot</h1>
 
-  <p lang="en"><a href="https://www.instagram.com/m.kvaapagarrot/"><i class="font-icon">&#xf16d;</i>Instagram</a></p>
-  <p lang="en"><a href="https://www.facebook.com/kvaapagarrot"><i class="font-icon">&#xf09a;</i>Facebook</a></p>
-  <p lang="en"><a href="https://vk.com/kvaapagarrot"><i class="font-icon">&#xf189;</i>VK</a></p>
-  <p lang="en"><a href="https://deviantart.com/kvaapagarrots/"><i class="font-icon">&#xf1bd;</i>DeviantArt</a></p>
-  <p lang="en"><a href="https://www.behance.net/kvaapagarrot"><i class="font-icon">&#xf1b5;</i>Behance</a></p>
+  <p><a href="https://www.instagram.com/m.kvaapagarrot/"><i class="font-icon">&#xf16d;</i>Instagram</a></p>
+  <p><a href="https://www.facebook.com/kvaapagarrot"><i class="font-icon">&#xf09a;</i>Facebook</a></p>
+  <p><a href="https://vk.com/kvaapagarrot"><i class="font-icon">&#xf189;</i>VK</a></p>
+  <p><a href="https://deviantart.com/kvaapagarrots/"><i class="font-icon">&#xf1bd;</i>DeviantArt</a></p>
+  <p><a href="https://www.behance.net/kvaapagarrot"><i class="font-icon">&#xf1b5;</i>Behance</a></p>
+
+  <p>For all inquiries:</p>
+  <p><a id="a-contact" itemprop="email" href="mailto:spambait@kvaapagarrot.com"><i class="font-icon">&#xe800;</i>spambait@kvaapagarrot.com</a></p>
+
+  <!--suppress ES6ConvertVarToLetConst -->
+  <script>
+    // Crawler semi-protection
+    var a = document.getElementById('a-contact');
+    a.setAttribute('href', a.getAttribute('href').replace('spambait', 'm'));
+    a.innerHTML = a.innerHTML.replace('spambait', 'm');
+  </script>
