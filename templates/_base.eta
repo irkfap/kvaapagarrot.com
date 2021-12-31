@@ -47,7 +47,7 @@
 
   <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500&family=Raleway:wght@350&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="/dist/main.css?ver2">
+  <link rel="stylesheet" href="/dist/main.css?ver3">
 </head>
 <body role="document">
   <%~ it.body %>
