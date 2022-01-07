@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "eta": "1.12.3",
-    "fast-glob": "3.2.7",
+    "fast-glob": "3.2.8",
     "fastify": "3.25.3",
     "fastify-static": "4.5.0",
     "mnemonist": "0.39.0",
