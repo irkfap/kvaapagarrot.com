@@ -9,7 +9,7 @@
   <p><a href="https://www.behance.net/kvaapagarrot"><i class="font-icon">&#xf1b5;</i>Behance</a></p>
 
   <p>For all inquiries:</p>
-  <p><a id="a-contact" itemprop="email" href="mailto:spambait@kvaapagarrot.com"><i class="font-icon">&#xe800;</i>spambait@kvaapagarrot.com</a></p>
+  <p><a id="a-contact" itemprop="email" href="mailto:spambait@kvaapagarrot.com" target="_blank"><i class="font-icon">&#xe800;</i>spambait@kvaapagarrot.com</a></p>
 
   <!--suppress ES6ConvertVarToLetConst -->
   <script>
