@@ -43,7 +43,7 @@ jobs:
 
       # Preferable to use the same version as in GAE environment
       - name: Set Node.js version
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: '14.17.6'
 
@@ -94,7 +94,7 @@ jobs:
 
       # Preferable to use the same version as in GAE environment
       - name: Set Node.js version
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: '14.17.6'
 
