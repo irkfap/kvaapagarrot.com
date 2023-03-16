@@ -175,7 +175,7 @@ jobs:
         run: curl --silent --fail --include --request GET "${{needs.deploy-gae.outputs.version-url}}/robots.txt"
 
       - name: Audit URLs using Lighthouse
-        uses: treosh/lighthouse-ci-action@8.2.0
+        uses: treosh/lighthouse-ci-action@9.6.8
         with:
           urls: |
             ${{needs.deploy-gae.outputs.version-url}}
