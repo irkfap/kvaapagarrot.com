@@ -21,7 +21,7 @@
     "watch": "NODE_ENV=development rollup -c -w"
   },
   "dependencies": {
-    "eta": "1.12.3",
+    "eta": "2.0.0",
     "fast-glob": "3.2.11",
     "fastify": "3.27.4",
     "fastify-static": "4.6.1",
